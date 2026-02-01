@@ -3,13 +3,13 @@
 
 <p align="left"> <a href="https://twitter.com/jacobsk92" target="blank"><img src="https://img.shields.io/twitter/follow/jacobsk92?logo=twitter&style=for-the-badge" alt="jacobsk92" /></a> </p>
 
-- 🌱 I’m currently learning **Python and Javascript**
+- 🌱 I’m currently learning **Python, PowerShell and Javascript**
 
 - 💬 Ask me about **Security Architecture, Project Management**
 
 - 📫 How to reach me **jacob.kraniak@protonmail.com**
 
-- 📄 Know about my experiences [https://www.linkedin.com/in/jacob-kraniak/](https://www.linkedin.com/in/jacob-kraniak/)
+- 📄 My technical background [https://www.linkedin.com/in/jacob-kraniak/](https://www.linkedin.com/in/jacob-kraniak/)
 
 <h3 align="left">Connect with me:</h3>
 <p align="left">
