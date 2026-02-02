@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="1.0">
+  <head>
+    <title>Feeder - RSS Feed Reader</title>
+    <dateCreated>2026-02-02T17:47:47Z</dateCreated>
+  </head>
+  <body>
+    <outline title="Threat Intelligence" text="Threat Intelligence">
+      <outline text="Cybersecurity Insights" title="Cybersecurity Insights" type="rss" xmlUrl="https://www.nist.gov/blogs/cybersecurity-insights/rss.xml" htmlUrl="https://www.nist.gov/blogs/cybersecurity-insights/rss.xml" rssfr-numPosts="0" rssfr-favicon="https://icons.feedercdn.com/www.nist.gov" rssfr-useNotifications="0" rssfr-updateInterval=""/>
+      <outline text="Talos Blog" title="Talos Blog" type="rss" xmlUrl="https://feeds.feedburner.com/feedburner/Talos" htmlUrl="https://blog.talosintelligence.com/" rssfr-numPosts="0" rssfr-favicon="https://icons.feedercdn.com/blog.talosintelligence.com" rssfr-useNotifications="0" rssfr-updateInterval=""/>
+      <outline text="Center for Internet Security - Multi-State Information Sharing and Analysis Center" title="Center for Internet Security - Multi-State Information Sharing and Analysis Center" type="rss" xmlUrl="https://www.cisecurity.org/feed/advisories" htmlUrl="https://www.cisecurity.org" rssfr-numPosts="0" rssfr-favicon="https://icons.feedercdn.com/www.cisecurity.org" rssfr-useNotifications="0" rssfr-updateInterval=""/>
+      <outline text="MSRC Security Update Guide" title="MSRC Security Update Guide" type="rss" xmlUrl="https://api.msrc.microsoft.com/update-guide/rss" htmlUrl="https://msrc.microsoft.com/update-guide/" rssfr-numPosts="0" rssfr-favicon="https://icons.feedercdn.com/msrc.microsoft.com" rssfr-useNotifications="0" rssfr-updateInterval=""/>
+      <outline text="CISA Analysis Reports" title="CISA Analysis Reports" type="rss" xmlUrl="https://www.cisa.gov/cybersecurity-advisories/all.xml" htmlUrl="https://www.cisa.gov/" rssfr-numPosts="0" rssfr-favicon="https://icons.feedercdn.com/www.cisa.gov" rssfr-useNotifications="0" rssfr-updateInterval=""/>
+      <outline text="GreyNoise Threat Signals Blog" title="GreyNoise Threat Signals Blog" type="rss" xmlUrl="https://www.greynoise.io/category/vulnerabilities" htmlUrl="https://www.greynoise.io/category/vulnerabilities" rssfr-numPosts="0" rssfr-favicon="https://icons.feedercdn.com/www.greynoise.io" rssfr-useNotifications="0" rssfr-updateInterval=""/>
+    </outline>
+    <outline title="Service Status" text="Service Status">
+      <outline text="Azure Status" title="Azure Status" type="rss" xmlUrl="https://rssfeed.azure.status.microsoft/en-us/status/feed/" htmlUrl="https://status.azure.com/en-us/status/" rssfr-numPosts="0" rssfr-favicon="https://icons.feedercdn.com/status.azure.com" rssfr-useNotifications="0" rssfr-updateInterval="7200000"/>
+      <outline text="Microsoft Admin Center Status" title="Microsoft Admin Center Status" type="rss" xmlUrl="https://status.cloud.microsoft/api/feed/mac" htmlUrl="https://status.cloud.microsoft/" rssfr-numPosts="0" rssfr-favicon="https://icons.feedercdn.com/status.cloud.microsoft" rssfr-useNotifications="0" rssfr-updateInterval="7200000"/>
+      <outline text="Bitwarden Status" title="Bitwarden Status" type="rss" xmlUrl="https://status.bitwarden.com/state_feed/feed" htmlUrl="https://status.bitwarden.com" rssfr-numPosts="0" rssfr-favicon="https://icons.feedercdn.com/status.bitwarden.com" rssfr-useNotifications="0" rssfr-updateInterval=""/>
+      <outline text="KnowBe4 Status - Incident History" title="KnowBe4 Status - Incident History" type="rss" xmlUrl="https://status.knowbe4.com/history.rss" htmlUrl="https://status.knowbe4.com" rssfr-numPosts="0" rssfr-favicon="https://icons.feedercdn.com/status.knowbe4.com" rssfr-useNotifications="0" rssfr-updateInterval=""/>
+      <outline text="SentinelOne System Status" title="SentinelOne System Status" type="rss" xmlUrl="https://status.sentinelone.com/" htmlUrl="https://status.sentinelone.com/" rssfr-numPosts="0" rssfr-favicon="https://icons.feedercdn.com/status.sentinelone.com" rssfr-useNotifications="0" rssfr-updateInterval=""/>
+      <outline text="Xink.io System Status" title="Xink.io System Status" type="rss" xmlUrl="https://status.xink.io/#about-this-site" htmlUrl="https://status.xink.io/#about-this-site" rssfr-numPosts="0" rssfr-favicon="https://icons.feedercdn.com/status.xink.io" rssfr-useNotifications="0" rssfr-updateInterval=""/>
+    </outline>
+    <outline title="News and Blogs" text="News and Blogs">
+      <outline text="BleepingComputer.com" title="BleepingComputer.com" type="rss" xmlUrl="https://www.bleepingcomputer.com/feed/" htmlUrl="https://www.bleepingcomputer.com/" rssfr-numPosts="0" rssfr-favicon="https://icons.feedercdn.com/www.bleepingcomputer.com" rssfr-useNotifications="0" rssfr-updateInterval="7200000"/>
+      <outline text="Microsoft Security Blog" title="Microsoft Security Blog" type="rss" xmlUrl="https://www.microsoft.com/en-us/security/blog/feed/" htmlUrl="https://www.microsoft.com/en-us/security/blog/" rssfr-numPosts="0" rssfr-favicon="https://icons.feedercdn.com/www.microsoft.com" rssfr-useNotifications="0" rssfr-updateInterval=""/>
+      <outline text="Active Directory Security" title="Active Directory Security" type="rss" xmlUrl="https://adsecurity.org/?feed=rss2" htmlUrl="https://adsecurity.org" rssfr-numPosts="0" rssfr-favicon="https://icons.feedercdn.com/adsecurity.org" rssfr-useNotifications="0" rssfr-updateInterval=""/>
+      <outline text="Zscaler Blog Feeds" title="Zscaler Blog Feeds" type="rss" xmlUrl="https://www.zscaler.com/blogs/feeds?utm_source=google&amp;utm_medium=cpc&amp;utm_campaign=google-ads-na" htmlUrl="https://www.zscaler.com/" rssfr-numPosts="0" rssfr-favicon="https://icons.feedercdn.com/www.zscaler.com" rssfr-useNotifications="0" rssfr-updateInterval=""/>
+      <outline text="CISA News" title="CISA News" type="rss" xmlUrl="https://www.cisa.gov/news.xml" htmlUrl="https://www.cisa.gov/" rssfr-numPosts="0" rssfr-favicon="https://icons.feedercdn.com/www.cisa.gov" rssfr-useNotifications="0" rssfr-updateInterval=""/>
+    </outline>
+    <outline text="Potential Impacts" title="Potential Impacts" type="rss" xmlUrl="" htmlUrl="" rssfr-numPosts="0" rssfr-favicon="https://assets.feedercdn.com/collection-icons/alert-circle-green.svg" rssfr-useNotifications="0" rssfr-updateInterval=""/>
+    <outline text="Freight Industry Threats" title="Freight Industry Threats" type="rss" xmlUrl="" htmlUrl="" rssfr-numPosts="0" rssfr-favicon="https://assets.feedercdn.com/collection-icons/waves-red.svg" rssfr-useNotifications="0" rssfr-updateInterval=""/>
+  </body>
+</opml>
