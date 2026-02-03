@@ -14,6 +14,18 @@
 ## 🌐 Socials:
 [![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://instagram.com/kraniakjacob) [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://linkedin.com/in/jacob-kraniak) [![X](https://img.shields.io/badge/X-black.svg?logo=X&logoColor=white)](https://x.com/jacobsk92) [![email](https://img.shields.io/badge/Email-D14836?logo=gmail&logoColor=white)](mailto:jacob.kraniak@protonmail.com) 
 
+## 🖥️ Daily Driver (Feb 2026)
+
+| Component       | Spec                                      |
+|-----------------|-------------------------------------------|
+| **OS**          | Linux 6.17.10+kali-amd64 |
+| **Make/Model**  | Lenovo ThinkPad X380 Yoga
+| **CPU**         | Intel(R) Core(TM) i5-8350U (8) @ 3.60 GHz |
+| **RAM**         | 16GB GB DDR4-2400     |
+| **GPU**         | Intel UHD Graphics 620 @ 1.10 GHz        |
+| **Storage**     | 512GB NVMe SSD |
+| **Daily tools** | |
+
 # 💻 Tech Stack:
 ![Markdown](https://img.shields.io/badge/markdown-%23000000.svg?style=flat&logo=markdown&logoColor=white) ![Python](https://img.shields.io/badge/python-3670A0?style=flat&logo=python&logoColor=ffdd54) ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=flat&logo=typescript&logoColor=white) ![Bash Script](https://img.shields.io/badge/bash_script-%23121011.svg?style=flat&logo=gnu-bash&logoColor=white) ![Windows Terminal](https://img.shields.io/badge/Windows%20Terminal-%234D4D4D.svg?style=flat&logo=windows-terminal&logoColor=white) ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=flat&logo=javascript&logoColor=%23F7DF1E) ![PowerShell](https://img.shields.io/badge/PowerShell-%235391FE.svg?style=flat&logo=powershell&logoColor=white) ![PowerShell](https://img.shields.io/badge/PowerShell-%235391FE.svg?style=flat&logo=powershell&logoColor=white) ![Power Bi](https://img.shields.io/badge/power_bi-F2C811?style=flat&logo=powerbi&logoColor=black) ![Raspberry Pi](https://img.shields.io/badge/-Raspberry_Pi-C51A4A?style=flat&logo=Raspberry-Pi) ![Postman](https://img.shields.io/badge/Postman-FF6C37?style=flat&logo=postman&logoColor=white) ![Pi-Hole](https://img.shields.io/badge/pihole-%2396060C.svg?style=flat&logo=pi-hole&logoColor=white) ![Bitwarden](https://img.shields.io/badge/bitwarden-%23175DDC.svg?style=flat&logo=bitwarden&logoColor=white)
 
