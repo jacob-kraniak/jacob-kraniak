@@ -1,4 +1,4 @@
-<h1 align="center">Hi 👋, I'm Jacob Kraniak</h1>
+<h1 align="center">Hi There👋, I'm Jacob Kraniak</h1>
 <p align="left"> <img src="https://komarev.com/ghpvc/?username=jacob-kraniak&label=Profile%20views&color=0e75b6&style=flat" alt="jacob-kraniak" /> </p>
 
 <p align="left"> <a href="https://twitter.com/jacobsk92" target="blank"><img src="https://img.shields.io/twitter/follow/jacobsk92?logo=twitter&style=for-the-badge" alt="jacobsk92" /></a> </p>
@@ -12,7 +12,7 @@
 - 📄 My technical background [https://www.linkedin.com/in/jacob-kraniak/](https://www.linkedin.com/in/jacob-kraniak/)
 
 ## 🌐 Socials:
-[![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://instagram.com/kraniakjacob) [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://linkedin.com/in/jacob-kraniak) [![X](https://img.shields.io/badge/X-black.svg?logo=X&logoColor=white)](https://x.com/jacobsk92) [![email](https://img.shields.io/badge/Email-D14836?logo=gmail&logoColor=white)](mailto:jacob.kraniak@protonmail.com) 
+[![Instagram <only cool people I've met in-person](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://instagram.com/kraniakjacob) [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://linkedin.com/in/jacob-kraniak) [![X](https://img.shields.io/badge/X-black.svg?logo=X&logoColor=white)](https://x.com/jacobsk92) [![email](https://img.shields.io/badge/Email-D14836?logo=gmail&logoColor=white)](mailto:jacob.kraniak@protonmail.com) 
 
 ## 🖥️ Daily Driver (Feb 2026)
 
