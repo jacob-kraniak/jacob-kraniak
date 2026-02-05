@@ -4,6 +4,14 @@
 
 <p align="left"> <a href="https://twitter.com/jacobsk92" target="blank"><img src="https://img.shields.io/twitter/follow/jacobsk92?logo=twitter&style=for-the-badge" alt="jacobsk92" /></a> </p>
 
+<p>
+I'm a builder, I always have projects ideas bouncing around in my head. 
+  SuperGrok 4.1 helps me guide these ideas to reality. 
+This Project ideation is being documented in https://github.com/jacob-kraniak/Project-ideas.
+</p>
+
+-----
+
 - 🌱 Advancing my career by *learning something new every day*
 
 - 💬 Ask me about **Security Architecture, Project Management, API/Data Pipelines, Threat Intelligence, GRC**
