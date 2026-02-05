@@ -3,9 +3,9 @@
 
 <p align="left"> <a href="https://twitter.com/jacobsk92" target="blank"><img src="https://img.shields.io/twitter/follow/jacobsk92?logo=twitter&style=for-the-badge" alt="jacobsk92" /></a> </p>
 
-- 🌱 I’m currently learning **Python, PowerShell and Javascript**
+- 🌱 Advancing my career by *learning something new every day*
 
-- 💬 Ask me about **Security Architecture, Project Management, Threat Intelligence, GRC**
+- 💬 Ask me about **Security Architecture, Project Management, API/Data Pipelines, Threat Intelligence, GRC**
 
 - 📫 How to reach me **jacob.kraniak@protonmail.com**
 
