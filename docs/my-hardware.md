@@ -1,37 +1,21 @@
-## Active Hardware
+# Active Hardware (as of Feb 2026)
 
-### Primary Home PC 🖥️ (Feb 2024)
+## Primary Home PC – Feb 2024 build
+- **Motherboard**: MSI B450M DS3H
+- **CPU**: AMD Ryzen 5 2600X
+- **RAM**: 16GB DDR4
+- **GPU**: NVIDIA GTX 1070
+- **OS**: Bazzite Linux (immutable Fedora-based gaming/security distro)
 
-| Component       | Spec                                      |
-|-----------------|-------------------------------------------|
-| **OS**          | Bazzite Linux 6.17.7 |
-| **Make/Model**  | MSI B450M DS3H |
-| **CPU**         | AMD Ryzen 5 2600X (12) @ 3.6GHz|
-| **RAM**         | 16GB GB DDR4-3200     |
-| **GPU**         | NVIDIA GeForce GTX 1070 6GB       |
-| **Storage**     | 250GB 2.5" SSD - 3TB Seagate Ext HD |
-| **Daily tools** | |
+## Dev/Testing Laptop
+- **Model**: Lenovo ThinkPad X380 Yoga
+- **CPU**: Intel i5-8350U
+- **RAM**: 16GB DDR4
+- **OS**: Kali Linux
 
-### Dev/Testing Laptop 💻 (Feb 2026)
-
-| Component       | Spec                                      |
-|-----------------|-------------------------------------------|
-| **OS**          | Linux 6.17.10+kali-amd64 |
-| **Make/Model**  | Lenovo ThinkPad X380 Yoga
-| **CPU**         | Intel(R) Core(TM) i5-8350U (8) @ 3.60 GHz |
-| **RAM**         | 16GB GB DDR4-2400     |
-| **GPU**         | Intel UHD Graphics 620 @ 1.10 GHz        |
-| **Storage**     | 512GB NVMe SSD |
-| **Daily tools** | |
-
-### Day-Job Laptop 💻 (Feb 2026)
-
-| Component       | Spec                                      |
-|-----------------|-------------------------------------------|
-| **OS**          | Microsoft Windows 11 Enterprise |
-| **Make/Model**  | Lenovo ThinkPad P14s Gen 4 |
-| **CPU**         | 13th Gen Intel Core i7-1370P 1.9GHz  |
-| **RAM**         | 32GB GB DDR5-6400     |
-| **GPU**         | NVIDIA RTX A500 Laptop GPU     |
-| **Storage**     | 1TB NVMe SSD |
-| **Daily tools** | |
+## Day-Job Laptop
+- **Model**: Lenovo ThinkPad P14s Gen 4
+- **CPU**: Intel i7-1370P
+- **RAM**: 32GB DDR5
+- **GPU**: NVIDIA RTX A500
+- **OS**: Windows 11 Pro
