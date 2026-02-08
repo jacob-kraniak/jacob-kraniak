@@ -47,50 +47,15 @@ All badges verifiable on [Credly Profile](https://www.credly.com/users/jacob-kra
 
 [![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://instagram.com/kraniakjacob)  <only for cool people I've met in-person
 
+## Active Hardware
+I run a mix of Linux desktops/laptops for security work, development, and daily driving.
+→ [See current rigs and specs → hardware.md](./hardware.md)
+
 # 💻 Tech Stack:
 ## Languages: 
 ![Markdown](https://img.shields.io/badge/markdown-%23000000.svg?style=flat&logo=markdown&logoColor=white) ![Python](https://img.shields.io/badge/python-3670A0?style=flat&logo=python&logoColor=ffdd54) ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=flat&logo=typescript&logoColor=white) ![Bash Script](https://img.shields.io/badge/bash_script-%23121011.svg?style=flat&logo=gnu-bash&logoColor=white) ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=flat&logo=javascript&logoColor=%23F7DF1E) ![PowerShell](https://img.shields.io/badge/PowerShell-%235391FE.svg?style=flat&logo=powershell&logoColor=white)
 ## Software Tools: 
 ![Windows Terminal](https://img.shields.io/badge/Windows%20Terminal-%234D4D4D.svg?style=flat&logo=windows-terminal&logoColor=white) ![Power Bi](https://img.shields.io/badge/power_bi-F2C811?style=flat&logo=powerbi&logoColor=black) ![Raspberry Pi](https://img.shields.io/badge/-Raspberry_Pi-C51A4A?style=flat&logo=Raspberry-Pi) ![Postman](https://img.shields.io/badge/Postman-FF6C37?style=flat&logo=postman&logoColor=white) ![Pi-Hole](https://img.shields.io/badge/pihole-%2396060C.svg?style=flat&logo=pi-hole&logoColor=white) ![Bitwarden](https://img.shields.io/badge/bitwarden-%23175DDC.svg?style=flat&logo=bitwarden&logoColor=white)
-
-## Active Hardware
-
-### Primary Home PC 🖥️ (Feb 2024)
-
-| Component       | Spec                                      |
-|-----------------|-------------------------------------------|
-| **OS**          | Bazzite Linux 6.17.7 |
-| **Make/Model**  | MSI B450M DS3H |
-| **CPU**         | AMD Ryzen 5 2600X (12) @ 3.6GHz|
-| **RAM**         | 16GB GB DDR4-3200     |
-| **GPU**         | NVIDIA GeForce GTX 1070 6GB       |
-| **Storage**     | 250GB 2.5" SSD - 3TB Seagate Ext HD |
-| **Daily tools** | |
-
-### Dev/Testing Laptop 💻 (Feb 2026)
-
-| Component       | Spec                                      |
-|-----------------|-------------------------------------------|
-| **OS**          | Linux 6.17.10+kali-amd64 |
-| **Make/Model**  | Lenovo ThinkPad X380 Yoga
-| **CPU**         | Intel(R) Core(TM) i5-8350U (8) @ 3.60 GHz |
-| **RAM**         | 16GB GB DDR4-2400     |
-| **GPU**         | Intel UHD Graphics 620 @ 1.10 GHz        |
-| **Storage**     | 512GB NVMe SSD |
-| **Daily tools** | |
-
-### Day-Job Laptop 💻 (Feb 2026)
-
-| Component       | Spec                                      |
-|-----------------|-------------------------------------------|
-| **OS**          | Microsoft Windows 11 Enterprise |
-| **Make/Model**  | Lenovo ThinkPad P14s Gen 4 |
-| **CPU**         | 13th Gen Intel Core i7-1370P 1.9GHz  |
-| **RAM**         | 32GB GB DDR5-6400     |
-| **GPU**         | NVIDIA RTX A500 Laptop GPU     |
-| **Storage**     | 1TB NVMe SSD |
-| **Daily tools** | |
-
 
 # 📊 GitHub Stats:
 ![](https://github-readme-stats.vercel.app/api?username=jacob-kraniak&theme=codeSTACKr&hide_border=false&include_all_commits=true&count_private=true)<br/>
