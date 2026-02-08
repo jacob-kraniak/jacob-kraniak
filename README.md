@@ -5,7 +5,7 @@
 <p>
 I'm a builder, I always have projects ideas bouncing around in my head. 
   SuperGrok 4.1 helps me guide these ideas to reality. 
-This Project ideation is being documented in https://github.com/jacob-kraniak/Project-ideas.
+This Project ideation is being documented in /Project-ideas.
 
 Driving vision:
 
