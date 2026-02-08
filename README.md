@@ -15,7 +15,7 @@ _"Move fast and break things."_
 - 💬 Ask me about **Security Architecture, Project Management, API/Data Pipelines, Threat Intelligence, GRC**
 
 - 📫 How to reach me **jacob.kraniak@protonmail.com**
-- 
+
 </p>
 
 ## Certifications
