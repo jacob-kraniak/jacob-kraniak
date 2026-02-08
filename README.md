@@ -11,6 +11,11 @@ Driving vision:
 
 _"Learn something new every day."_  
 _"Move fast and break things."_
+
+- 💬 Ask me about **Security Architecture, Project Management, API/Data Pipelines, Threat Intelligence, GRC**
+
+- 📫 How to reach me **jacob.kraniak@protonmail.com**
+- 
 </p>
 
 ## Certifications
@@ -36,10 +41,6 @@ Researching and tracking next certifications (e.g., Security+ as immediate next 
 Interactive Kanban board coming soon: [Cybersecurity Certification Roadmap Project](https://github.com/users/jacob-kraniak/projects/new) (will update link once created).
 
 All badges verifiable on [Credly Profile](https://www.credly.com/users/jacob-kraniak/badges)
-
-- 💬 Ask me about **Security Architecture, Project Management, API/Data Pipelines, Threat Intelligence, GRC**
-
-- 📫 How to reach me **jacob.kraniak@protonmail.com**
 
 ## 🌐 Socials:
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://linkedin.com/in/jacob-kraniak) [![X](https://img.shields.io/badge/X-black.svg?logo=X&logoColor=white)](https://x.com/jacobsk92)
