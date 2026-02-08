@@ -2,23 +2,43 @@
 
 <p align="left"> <img src="https://komarev.com/ghpvc/?username=jacob-kraniak&label=Profile%20views&color=0e75b6&style=flat" alt="jacob-kraniak" /> </p>
 
-<p align="left"> <a href="https://twitter.com/jacobsk92" target="blank"><img src="https://img.shields.io/twitter/follow/jacobsk92?logo=twitter&style=for-the-badge" alt="jacobsk92" /></a> </p>
-
 <p>
 I'm a builder, I always have projects ideas bouncing around in my head. 
   SuperGrok 4.1 helps me guide these ideas to reality. 
 This Project ideation is being documented in https://github.com/jacob-kraniak/Project-ideas.
+
+Driving vision:
+_"Learn something new every day."_
+_"Move fast and break things."_
 </p>
 
------
+## Certifications
 
-- 🌱 Advancing my career by *learning something new every day*
+Actively maintaining foundational infrastructure skills while advancing in cybersecurity (inspired by [Paul Jerimy's Roadmap](https://pauljerimy.com/security-certification-roadmap) and [CyberSecCertificates](https://cyberseccertificates.com)).
+
+### Active Badges
+<p align="center">
+  <a href="https://www.credly.com/badges/1fc6fa72-65b5-4d96-bf02-88a27b0e71e2/public_url">
+    <img src="https://raw.githubusercontent.com/jacob-kraniak/jacob-kraniak/main/images/comptia-server-certification.4.png" alt="CompTIA Server+" width="80" />
+  </a>
+</p>
+
+### Certification Details
+| Certification              | Issuer   | Status              | Issued     | Expiration | Notes |
+|----------------------------|----------|---------------------|------------|------------|-------|
+| CompTIA Server+           | CompTIA | Active             | Nov 2018  | Never     | Server hardware, virtualization, security basics, troubleshooting. [Verify](https://www.credly.com/badges/1fc6fa72-65b5-4d96-bf02-88a27b0e71e2/public_url) |
+| CompTIA Network+ CE       | CompTIA | Expired            | [Date from Credly] | June 2023 | Core networking foundation. |
+| CompTIA A+                | CompTIA | Expired            | [Date from Credly] | June 2023 | Hardware/OS troubleshooting base. |
+
+### Ongoing Journey
+Researching and tracking next certifications (e.g., Security+ → CySA+ → advanced paths).  
+Interactive Kanban board coming soon: [Cybersecurity Certification Roadmap Project](https://github.com/users/jacob-kraniak/projects/new) (link once created).
+
+All badges verifiable on [Credly](https://www.credly.com/users/jacob-kraniak/badges)
 
 - 💬 Ask me about **Security Architecture, Project Management, API/Data Pipelines, Threat Intelligence, GRC**
 
 - 📫 How to reach me **jacob.kraniak@protonmail.com**
-
-- 📄 My technical background [https://www.linkedin.com/in/jacob-kraniak/](https://www.linkedin.com/in/jacob-kraniak/)
 
 ## 🌐 Socials:
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://linkedin.com/in/jacob-kraniak) [![X](https://img.shields.io/badge/X-black.svg?logo=X&logoColor=white)](https://x.com/jacobsk92)
