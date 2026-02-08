@@ -47,9 +47,12 @@ All badges verifiable on [Credly Profile](https://www.credly.com/users/jacob-kra
 
 [![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://instagram.com/kraniakjacob)  <only for cool people I've met in-person
 
-## Active Hardware
-I run a mix of Linux desktops/laptops for security work, development, and daily driving.
-→ [See current rigs and specs → hardware.md](./hardware.md)
+## 💻 Current Rigs
+- Primary home build (Bazzite Linux)
+- Dev/testing convertible (Kali)
+- Workhorse ThinkPad (Windows 11)
+
+Full specs and history → [hardware.md](./hardware.md)
 
 # 💻 Tech Stack:
 ## Languages: 
