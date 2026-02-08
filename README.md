@@ -16,25 +16,25 @@ _"Move fast and break things."_
 
 Actively maintaining foundational infrastructure skills while advancing in cybersecurity (inspired by [Paul Jerimy's Roadmap](https://pauljerimy.com/security-certification-roadmap) and [CyberSecCertificates](https://cyberseccertificates.com)).
 
-### Active Badges
+### Active Badge
 <p align="center">
   <a href="https://www.credly.com/badges/1fc6fa72-65b5-4d96-bf02-88a27b0e71e2/public_url">
-    <img src="https://raw.githubusercontent.com/jacob-kraniak/jacob-kraniak/main/images/comptia-server-certification.4.png" alt="CompTIA Server+" width="80" />
+    <img src="https://raw.githubusercontent.com/jacob-kraniak/jacob-kraniak/main/images/comptia-server-certification.4.png" alt="CompTIA Server+" width="100" />
   </a>
 </p>
 
 ### Certification Details
-| Certification              | Issuer   | Status              | Issued     | Expiration | Notes |
-|----------------------------|----------|---------------------|------------|------------|-------|
-| CompTIA Server+           | CompTIA | Active             | Nov 2018  | Never     | Server hardware, virtualization, security basics, troubleshooting. [Verify](https://www.credly.com/badges/1fc6fa72-65b5-4d96-bf02-88a27b0e71e2/public_url) |
-| CompTIA Network+ CE       | CompTIA | Expired            | [Date from Credly] | June 2023 | Core networking foundation. |
-| CompTIA A+                | CompTIA | Expired            | [Date from Credly] | June 2023 | Hardware/OS troubleshooting base. |
+| Certification              | Issuer   | Status              | Issued          | Expiration   | Notes |
+|----------------------------|----------|---------------------|-----------------|--------------|-------|
+| CompTIA Server+           | CompTIA | Active             | Nov 2018       | Never       | Server hardware, virtualization, security basics, troubleshooting. [Verify](https://www.credly.com/badges/1fc6fa72-65b5-4d96-bf02-88a27b0e71e2/public_url) |
+| CompTIA Network+ CE       | CompTIA | Expired            | [Date from Credly] | Aug 2023   | Core networking foundation. [Verify](https://www.credly.com/badges/7bfcc047-aef1-474e-9350-0c3f470f6aec/public_url) |
+| CompTIA A+                | CompTIA | Expired            | [Date from Credly] | Aug 2023   | Hardware/OS troubleshooting base. [Verify](https://www.credly.com/badges/5bdf806a-4ea6-47e7-8b40-66f946c67727/public_url) |
 
 ### Ongoing Journey
-Researching and tracking next certifications (e.g., Security+ → CySA+ → advanced paths).  
-Interactive Kanban board coming soon: [Cybersecurity Certification Roadmap Project](https://github.com/users/jacob-kraniak/projects/new) (link once created).
+Researching and tracking next certifications (e.g., Security+ as immediate next step → CySA+ → advanced paths like CISSP or specialized domains).  
+Interactive Kanban board coming soon: [Cybersecurity Certification Roadmap Project](https://github.com/users/jacob-kraniak/projects/new) (will update link once created).
 
-All badges verifiable on [Credly](https://www.credly.com/users/jacob-kraniak/badges)
+All badges verifiable on [Credly Profile](https://www.credly.com/users/jacob-kraniak/badges)
 
 - 💬 Ask me about **Security Architecture, Project Management, API/Data Pipelines, Threat Intelligence, GRC**
 
