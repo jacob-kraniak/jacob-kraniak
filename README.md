@@ -8,7 +8,8 @@ I'm a builder, I always have projects ideas bouncing around in my head.
 This Project ideation is being documented in https://github.com/jacob-kraniak/Project-ideas.
 
 Driving vision:
-_"Learn something new every day."_
+
+_"Learn something new every day."_  
 _"Move fast and break things."_
 </p>
 
