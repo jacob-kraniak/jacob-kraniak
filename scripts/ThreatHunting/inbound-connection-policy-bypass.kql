@@ -1,7 +1,6 @@
 EmailEvents
 | where Timestamp between (startofmonth(ago(1d)) .. now())
 | where EmailDirection == "Inbound"
-| where SenderFromDomain !endswith "kwe.com"
 | where isnotempty(AuthenticationDetails)
 | extend AuthJson = parse_json(AuthenticationDetails)
 | mv-expand ProtocolDyn = bag_keys(AuthJson)
