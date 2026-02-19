@@ -1,0 +1,14 @@
+EmailEvents
+| where Timestamp between (startofmonth(ago(1d)) .. now())
+| where EmailDirection == "Inbound"
+| where SenderFromDomain !endswith "kwe.com"
+| where isnotempty(AuthenticationDetails)
+| extend AuthJson = parse_json(AuthenticationDetails)
+| mv-expand ProtocolDyn = bag_keys(AuthJson)
+| extend AuthenticationProtocol = tostring(ProtocolDyn)
+| extend AuthenticationResult = tostring(AuthJson[AuthenticationProtocol])
+| where AuthenticationProtocol in ("SPF", "DKIM", "DMARC")
+| where AuthenticationResult !contains "pass"
+| extend AuthenticationResult = tolower(AuthenticationResult)
+| summarize MessageCount = count() by AuthenticationProtocol, AuthenticationResult
+| sort by AuthenticationProtocol asc, MessageCount desc
