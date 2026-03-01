@@ -52,7 +52,7 @@ All badges verifiable on [Credly Profile](https://www.credly.com/users/jacob-kra
 - Dev/testing convertible (Kali)
 - Workhorse ThinkPad (Windows 11)
 
-Full specs and history → [hardware.md](./hardware.md)
+Full specs and history → [my-hardware.md](docs/my-hardware.md)
 
 # 💻 Tech Stack:
 ## Languages: 
@@ -72,5 +72,3 @@ Full specs and history → [hardware.md](./hardware.md)
 ![](https://github-contributor-stats.vercel.app/api?username=jacob-kraniak&limit=5&theme=tokyonight&combine_all_yearly_contributions=true)
 ---
 [![](https://visitcount.itsvg.in/api?id=jacob-kraniak&icon=0&color=0)](https://visitcount.itsvg.in)
-
-<!-- Proudly created with GPRM ( https://gprm.itsvg.in ) -->
