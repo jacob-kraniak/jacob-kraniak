@@ -42,6 +42,19 @@ Interactive Kanban board coming soon: [Cybersecurity Certification Roadmap Proje
 
 All badges verifiable on [Credly Profile](https://www.credly.com/users/jacob-kraniak/badges)
 
+### The Book of Secret Knowledge Fork – Cleanup Phase
+
+- **Date Started**: March 03, 2026
+- **Fork URL**: https://github.com/jacob-kraniak/the-book-of-secret-knowledge
+- **Recent Work**:
+  - Handful of commits pushed (link fixes, formatting).
+  - Branch: [https://github.com/jacob-kraniak/the-book-of-secret-knowledge/tree/JK_Revisions]
+  - Initial checks: Broken links (manual + planning GitHub Action), TOC accuracy, markdown consistency.
+- **Current Focus**: Low-hanging fruit cleanups before full split refactor.
+- **Long-term Plan**: Split monolithic README into category-based .md files under /docs/ for better navigation/maintainability.
+- **Status**: Fork up-to-date with upstream; PR to original submitted earlier.
+- **Next**: Implement markdown-link-check Action; start extracting 1-2 sections to docs/.
+
 ## 🌐 Socials:
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://linkedin.com/in/jacob-kraniak) [![X](https://img.shields.io/badge/X-black.svg?logo=X&logoColor=white)](https://x.com/jacobsk92)
 
