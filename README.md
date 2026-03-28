@@ -38,7 +38,7 @@ Actively maintaining foundational infrastructure skills while advancing in cyber
 
 ### Ongoing Journey
 Researching and tracking next certifications (e.g., Security+ as immediate next step → CySA+ → advanced paths like CISSP or specialized domains).  
-Interactive Kanban board coming soon: [Cybersecurity Certification Roadmap Project](https://github.com/users/jacob-kraniak/projects/new) (will update link once created).
+Interactive Kanban board coming soon: [Cybersecurity Certification Roadmap Project](https://github.com/users/jacob-kraniak/projects/3/views/1) WIP.
 
 All badges verifiable on [Credly Profile](https://www.credly.com/users/jacob-kraniak/badges)
 
