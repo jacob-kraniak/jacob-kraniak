@@ -12,7 +12,7 @@ Driving vision:
 _"Learn something new every day."_  
 _"Move fast and break things."_
 
-- 💬 Ask me about **Security Architecture, Project Management, API/Data Pipelines, Threat Intelligence, GRC**
+- 💬 Ask me about **Security Architecture, Project Management, Workflow Automation, API/Data Pipelines, Threat Intelligence, GRC**
 
 - 📫 How to reach me **jacob.kraniak@protonmail.com**
 
