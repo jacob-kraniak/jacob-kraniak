@@ -24,66 +24,33 @@ jobs:
             const projectNumber = 3;
             const owner = "jacob-kraniak";
             
-            const query = `
-              query($owner: String!, $projectNumber: Int!) {
-                user(login: $owner) {
-                  projectV2(number: $projectNumber) {
-                    items(first: 100) {
-                      nodes {
-                        id
-                        content {
-                          ... on Issue {
-                            number
-                            title
-                            url
-                          }
-                        }
-                        fieldValueByName(name: "Status") {
-                          ... on ProjectV2ItemFieldSingleSelectValue {
-                            name
-                          }
-                        }
-                      }
+            const query = `query($owner: String!, $projectNumber: Int!) {
+              user(login: $owner) {
+                projectV2(number: $projectNumber) {
+                  items(first: 100) {
+                    nodes {
+                      content { ... on Issue { number title url } }
+                      fieldValueByName(name: "Status") { ... on ProjectV2ItemFieldSingleSelectValue { name } }
                     }
                   }
                 }
               }
-            `;
+            }`;
             
             const result = await github.graphql(query, { owner, projectNumber });
-            const items = result.user.projectV2.items.nodes;
-            
-            let tableRows = "";
-            items.forEach(item => {
+            let rows = "";
+            result.user.projectV2.items.nodes.forEach(item => {
               if (item.content) {
                 const status = item.fieldValueByName?.name || "Unknown";
                 if (status === "Active" || status === "Complete") {
-                  tableRows += `| ${item.content.title} | ISC² | ${status} | May 2026 | N/A | [View Issue](${item.content.url}) |\n`;
+                  rows += `| ${item.content.title} | ISC² | ${status} | May 2026 | N/A | [View Issue](${item.content.url}) |\n`;
                 }
               }
             });
-            
-            core.setOutput("table_rows", tableRows || "| No active certifications found. | - | - | - | - | - |");
-            console.log("Extracted rows:\n" + tableRows);
+            core.setOutput("table_rows", rows || "| No active certifications found. | - | - | - | - | - |");
 
-      - name: Update README with new cert data
-        run: |
-          cat > /tmp/new_certs.md << 'EOT'
-${{ steps.cert-data.outputs.table_rows }}
-EOT
-
-          # Backup and update the table section
-          cp README.md README.md.bak
-          awk '
-            /### Certification Details/ { print; getline; print; next }
-            /### Ongoing Journey/ { 
-              while ((getline line < "/tmp/new_certs.md") > 0) print line
-              close("/tmp/new_certs.md")
-            }
-            !/### Ongoing Journey/ { print }
-          ' README.md.bak > README.md
-
-          echo "✅ README updated with project board data"
+      - name: Update README with Python
+        run: python scripts/update_certs.py "${{ steps.cert-data.outputs.table_rows }}"
 
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5
