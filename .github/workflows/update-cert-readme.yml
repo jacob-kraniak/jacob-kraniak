@@ -6,20 +6,79 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write     # Needed to commit changes to README.md
-  issues: read        # To read issue context
+  contents: write
+  issues: read
 
 jobs:
   update-certs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Test - Log trigger info
+      - name: Fetch Cert Status from Project Board
+        uses: actions/github-script@v7
+        id: cert-data
+        with:
+          script: |
+            const projectNumber = 3;
+            const owner = "jacob-kraniak";
+            
+            const query = `
+              query($owner: String!, $projectNumber: Int!) {
+                user(login: $owner) {
+                  projectV2(number: $projectNumber) {
+                    items(first: 100) {
+                      nodes {
+                        id
+                        content {
+                          ... on Issue {
+                            number
+                            title
+                            url
+                          }
+                        }
+                        fieldValueByName(name: "Status") {
+                          ... on ProjectV2ItemFieldSingleSelectValue {
+                            name
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            `;
+            
+            const result = await github.graphql(query, { owner, projectNumber });
+            const items = result.user.projectV2.items.nodes;
+            
+            // Build markdown table rows for Active certs
+            let tableRows = "";
+            items.forEach(item => {
+              const status = item.fieldValueByName?.name || "Unknown";
+              if (item.content && (status === "Active" || status === "Complete")) {
+                tableRows += `| ${item.content.title} | ISC² / Other | ${status} | Today | N/A | [Issue #${item.content.number}](${item.content.url}) |\n`;
+              }
+            });
+            
+            core.setOutput("table_rows", tableRows || "No active/complete certs found.");
+            console.log("Extracted rows:\n" + tableRows);
+
+      - name: Update README with new cert data
         run: |
-          echo "✅ Workflow triggered!"
-          echo "Event: ${{ github.event_name }}"
-          echo "Issue: ${{ github.event.issue.number || 'N/A' }}"
-          echo "Action: ${{ github.event.action || 'N/A' }}"
+          # Simple sed replacement for now - we can make it smarter later
+          sed -i '/### Certification Details/,/### Ongoing Journey/ {
+            /| Certification /,/^$/ {
+              /CompTIA Server+/r /dev/stdin
+            }
+          }' README.md << 'EOF'
+${{ steps.cert-data.outputs.table_rows }}
+EOF
+          echo "README updated with project data"
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "docs: auto-update certifications from project board (CC test)"
+          file_pattern: README.md
