@@ -53,29 +53,37 @@ jobs:
             const result = await github.graphql(query, { owner, projectNumber });
             const items = result.user.projectV2.items.nodes;
             
-            // Build markdown table rows for Active certs
             let tableRows = "";
             items.forEach(item => {
-              const status = item.fieldValueByName?.name || "Unknown";
-              if (item.content && (status === "Active" || status === "Complete")) {
-                tableRows += `| ${item.content.title} | ISC² / Other | ${status} | Today | N/A | [Issue #${item.content.number}](${item.content.url}) |\n`;
+              if (item.content) {
+                const status = item.fieldValueByName?.name || "Unknown";
+                if (status === "Active" || status === "Complete") {
+                  tableRows += `| ${item.content.title} | ISC² | ${status} | May 2026 | N/A | [View Issue](${item.content.url}) |\n`;
+                }
               }
             });
             
-            core.setOutput("table_rows", tableRows || "No active/complete certs found.");
+            core.setOutput("table_rows", tableRows || "| No active certifications found. | - | - | - | - | - |");
             console.log("Extracted rows:\n" + tableRows);
 
       - name: Update README with new cert data
         run: |
-          # Simple sed replacement for now - we can make it smarter later
-          sed -i '/### Certification Details/,/### Ongoing Journey/ {
-            /| Certification /,/^$/ {
-              /CompTIA Server+/r /dev/stdin
-            }
-          }' README.md << 'EOF'
+          cat > /tmp/new_certs.md << 'EOT'
 ${{ steps.cert-data.outputs.table_rows }}
-EOF
-          echo "README updated with project data"
+EOT
+
+          # Backup and update the table section
+          cp README.md README.md.bak
+          awk '
+            /### Certification Details/ { print; getline; print; next }
+            /### Ongoing Journey/ { 
+              while ((getline line < "/tmp/new_certs.md") > 0) print line
+              close("/tmp/new_certs.md")
+            }
+            !/### Ongoing Journey/ { print }
+          ' README.md.bak > README.md
+
+          echo "✅ README updated with project board data"
 
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5
