@@ -38,7 +38,6 @@ Actively maintaining foundational infrastructure skills while advancing in cyber
 
 | CompTIA Server+ SK0-004 (Active) | ISC² | Active | May 2026 | N/A | [View Issue](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/7) |
 | ISC² Certified in Cybersecurity (CC) | ISC² | Active | May 2026 | N/A | [View Issue](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/10) |
-
 ### Ongoing Journey
 Researching and tracking next certifications (e.g., Security+ as immediate next step → CySA+ → advanced paths like CISSP or specialized domains).  
 **Progress Tracked in this Repo** [./cybersecurity-certification-tracker](https://github.com/jacob-kraniak/cybersecurity-certification-tracker)
