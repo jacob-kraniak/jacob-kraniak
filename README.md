@@ -30,13 +30,12 @@ Actively maintaining foundational infrastructure skills while advancing in cyber
 </p>
 
 ### Certification Details
-| Certification              | Issuer   | Status              | Issued          | Expiration   | Notes |
-|----------------------------|----------|---------------------|-----------------|--------------|-------|
-| CompTIA Server+           | CompTIA | Active             | Nov 2018       | Never       | Server hardware, virtualization, security basics, troubleshooting. [Verify](https://www.credly.com/badges/1fc6fa72-65b5-4d96-bf02-88a27b0e71e2/public_url) |
-| CompTIA Network+ CE       | CompTIA | Expired            | June 2017 | Aug 2023   | Core networking foundation. [Verify](https://www.credly.com/badges/7bfcc047-aef1-474e-9350-0c3f470f6aec/public_url) |
-| CompTIA A+                | CompTIA | Expired            | May 2014 | Aug 2023   | Hardware/OS troubleshooting base. [Verify](https://www.credly.com/badges/5bdf806a-4ea6-47e7-8b40-66f946c67727/public_url) |
-| CompTIA Server+ SK0-004 (Active) | ISC² | Active | May 2026 | N/A | [View Issue](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/7) |
-| ISC² Certified in Cybersecurity (CC) | ISC² | Active | May 2026 | N/A | [View Issue](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/10) |
+
+| Certification | Issuer | Status | Issued | Expiration | Notes |
+|---------------|--------|--------|--------|------------|-------|
+| [CompTIA Server+ SK0-004 (Active)](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/7) | ISC² | Active | May 2026 | N/A | [Credly](https://www.credly.com/users/jacob-kraniak/badges) • [Issue #7](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/7) |
+| [ISC² Certified in Cybersecurity (CC)](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/10) | ISC² | Active | May 2026 | N/A | [Credly](https://www.credly.com/users/jacob-kraniak/badges) • [Issue #10](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/10) |
+
 ### Ongoing Journey
 Researching and tracking next certifications (e.g., Security+ as immediate next step → CySA+ → advanced paths like CISSP or specialized domains).  
 **Progress Tracked in this Repo** [./cybersecurity-certification-tracker](https://github.com/jacob-kraniak/cybersecurity-certification-tracker)
