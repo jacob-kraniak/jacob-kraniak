@@ -25,10 +25,9 @@ Actively maintaining foundational infrastructure skills while advancing in cyber
 ### Active Badge
 <p align="center">
   <a href="https://www.credly.com/badges/1fc6fa72-65b5-4d96-bf02-88a27b0e71e2/public_url">
-    <img src="https://raw.githubusercontent.com/jacob-kraniak/jacob-kraniak/main/images/comptia-server-certification.4.png" alt="CompTIA Server+" width="100" />
+    <img src="https://raw.githubusercontent.com/jacob-kraniak/jacob-kraniak/main/images/comptia-server-certification.4.png" alt="CompTIA Server+" width="150" />
   </a>
 </p>
-
 ### Certification Details
 
 | Certification | Issuer | Status | Issued | Expiration | Notes |
