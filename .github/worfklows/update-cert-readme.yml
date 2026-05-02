@@ -1,0 +1,35 @@
+name: Update Certifications in Profile README
+
+on:
+  issues:
+    types: [edited, reopened, closed]
+  workflow_dispatch:
+
+jobs:
+  update-certs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: read
+      projects: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch latest cert statuses from Project Board
+        uses: actions/github-script@v7
+        id: certs
+        with:
+          script: |
+            // Full GraphQL query + logic to build markdown table row for active certs
+            // I'll provide the complete script if you want
+
+      - name: Update README.md
+        run: |
+          python scripts/update_certs.py   # or Node.js equivalent
+
+      - name: Commit & Push if changed
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "docs: update CC cert to Active in profile README"
+          file_pattern: README.md
