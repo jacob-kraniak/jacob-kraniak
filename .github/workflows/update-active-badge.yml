@@ -1,0 +1,37 @@
+name: Update Active Credly Badge
+
+on:
+  schedule:
+    - cron: '0 12 * * *'   # Daily at noon
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-badge:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch Latest Active Badge from Credly
+        id: badge
+        run: |
+          # Public Credly endpoint for your badges
+          curl -s "https://www.credly.com/users/jacob-kraniak/badges.json" > badges.json
+          
+          # Get most recent active badge (adjust logic if needed)
+          LATEST=$(jq -r '.data[0] | select(.badge_template.state == "active") | "\(.badge_template.image_url)|\(.badge_template.name)|\(.badge_template.public_url)"' badges.json)
+          
+          echo "BADGE_DATA=$LATEST" >> $GITHUB_ENV
+
+      - name: Update Active Badge Section in README
+        run: |
+          python scripts/update_active_badge.py "${BADGE_DATA}"
+
+      - name: Commit and push
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "docs: auto-update Active Badge from Credly"
+          file_pattern: README.md
