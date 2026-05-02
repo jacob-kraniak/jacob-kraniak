@@ -42,9 +42,7 @@ jobs:
             result.user.projectV2.items.nodes.forEach(item => {
               if (item.content) {
                 const status = item.fieldValueByName?.name || "Unknown";
-                if (status === "Active" || status === "Complete") {
-                  rows += `| ${item.content.title} | ISC² | ${status} | May 2026 | N/A | [View Issue](${item.content.url}) |\n`;
-                }
+                if (status === "Active") {rows += `| [${item.content.title}](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/${item.content.number}) | ISC² | Active | May 2026 | N/A | [Credly](https://www.credly.com/users/jacob-kraniak/badges) • [Issue #${item.content.number}](${item.content.url}) |\n`;}
               }
             });
             core.setOutput("table_rows", rows || "| No active certifications found. | - | - | - | - | - |");
