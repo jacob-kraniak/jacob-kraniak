@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36">
   <diagram name="Page-1" id="xY09Q6onuYqpZeoEZWnc">
-    <mxGraphModel dx="3380" dy="1758" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="4724" dy="2284" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -97,17 +97,14 @@
             <mxGeometry height="80" width="80" x="860" y="-445" as="geometry" />
           </mxCell>
         </UserObject>
-        <mxCell id="yqVIpSw8xP5mOf5R9uwY-21" parent="1" style="whiteSpace=wrap;html=1;fillColor=#6d8764;fontColor=#ffffff;strokeColor=#3A5431;rounded=1;verticalAlign=bottom;align=center;fontStyle=0;fontSize=18;labelBackgroundColor=light-dark(default, #ffffff);fontFamily=Lucida Console;" value="&lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(0, 0, 0));&quot;&gt;KWE Equipment&lt;/font&gt;" vertex="1">
+        <mxCell id="yqVIpSw8xP5mOf5R9uwY-21" parent="1" style="whiteSpace=wrap;html=1;fillColor=#6d8764;fontColor=#ffffff;strokeColor=#3A5431;rounded=1;verticalAlign=bottom;align=center;fontStyle=0;fontSize=18;labelBackgroundColor=light-dark(default, #ffffff);fontFamily=Lucida Console;" value="&lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(0, 0, 0));&quot;&gt;Work Setup&lt;/font&gt;" vertex="1">
           <mxGeometry height="220" width="170" x="1610" y="-275" as="geometry" />
         </mxCell>
         <mxCell id="yqVIpSw8xP5mOf5R9uwY-22" edge="1" parent="1" source="yqVIpSw8xP5mOf5R9uwY-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="yqVIpSw8xP5mOf5R9uwY-27" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="yqVIpSw8xP5mOf5R9uwY-23" parent="1" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/wiring_hub.svg;labelBackgroundColor=none;" value="Docking Station" vertex="1">
-          <mxGeometry height="34" width="50" x="1705" y="-265" as="geometry" />
-        </mxCell>
-        <mxCell id="yqVIpSw8xP5mOf5R9uwY-24" parent="1" style="sketch=0;verticalLabelPosition=bottom;sketch=0;aspect=fixed;html=1;verticalAlign=top;strokeColor=none;fillColor=#000000;align=center;outlineConnect=0;pointerEvents=1;shape=mxgraph.citrix2.thin_client;points=[];" value="Test PC" vertex="1">
-          <mxGeometry height="70" width="51.19" x="1620" y="-205" as="geometry" />
+          <mxGeometry height="34" width="50" x="1640" y="-245" as="geometry" />
         </mxCell>
         <mxCell id="yqVIpSw8xP5mOf5R9uwY-25" edge="1" parent="1" source="yqVIpSw8xP5mOf5R9uwY-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;" target="yqVIpSw8xP5mOf5R9uwY-23">
           <mxGeometry relative="1" as="geometry">
@@ -117,18 +114,9 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="yqVIpSw8xP5mOf5R9uwY-26" edge="1" parent="1" source="yqVIpSw8xP5mOf5R9uwY-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="yqVIpSw8xP5mOf5R9uwY-24">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1339" y="-385" />
-              <mxPoint x="1500" y="-385" />
-              <mxPoint x="1500" y="-174" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
         <UserObject label="Work Laptop" tooltip="UHQPF4P7QM2" id="yqVIpSw8xP5mOf5R9uwY-27">
           <mxCell parent="1" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/laptop_client.svg;labelBackgroundColor=none;" vertex="1">
-            <mxGeometry height="65" width="58.5" x="1701.7" y="-190" as="geometry" />
+            <mxGeometry height="65" width="58.5" x="1700" y="-165" as="geometry" />
           </mxCell>
         </UserObject>
         <mxCell id="yqVIpSw8xP5mOf5R9uwY-28" edge="1" parent="1" source="yqVIpSw8xP5mOf5R9uwY-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" target="yqVIpSw8xP5mOf5R9uwY-20">
@@ -198,7 +186,7 @@
         <mxCell id="yqVIpSw8xP5mOf5R9uwY-48" parent="1" style="verticalLabelPosition=bottom;html=1;verticalAlign=top;align=center;strokeColor=none;fillColor=#00BEF2;shape=mxgraph.azure.laptop;pointerEvents=1;" value="Christine&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Laptop&lt;/span&gt;" vertex="1">
           <mxGeometry height="60" width="70" x="990" y="-145" as="geometry" />
         </mxCell>
-        <mxCell id="yqVIpSw8xP5mOf5R9uwY-49" parent="1" style="html=1;verticalLabelPosition=bottom;align=center;labelBackgroundColor=#ffffff;verticalAlign=top;strokeWidth=2;strokeColor=#0080F0;shadow=0;dashed=0;shape=mxgraph.ios7.icons.smartphone;" value="Google Pixel 8" vertex="1">
+        <mxCell id="yqVIpSw8xP5mOf5R9uwY-49" parent="1" style="html=1;verticalLabelPosition=bottom;align=center;labelBackgroundColor=#ffffff;verticalAlign=top;strokeWidth=2;strokeColor=#0080F0;shadow=0;dashed=0;shape=mxgraph.ios7.icons.smartphone;" value="Google Pixel 10" vertex="1">
           <mxGeometry height="30" width="18" x="972" y="-35" as="geometry" />
         </mxCell>
         <mxCell id="yqVIpSw8xP5mOf5R9uwY-50" parent="1" style="html=1;verticalLabelPosition=bottom;align=center;labelBackgroundColor=#ffffff;verticalAlign=top;strokeWidth=2;strokeColor=#0080F0;shadow=0;dashed=0;shape=mxgraph.ios7.icons.smartphone;" value="Samsung Galaxy S25+" vertex="1">
@@ -209,9 +197,6 @@
         </mxCell>
         <mxCell id="yqVIpSw8xP5mOf5R9uwY-52" parent="1" style="verticalLabelPosition=bottom;aspect=fixed;html=1;shape=mxgraph.salesforce.iot;" value="All IoT Devices" vertex="1">
           <mxGeometry height="80" width="80" x="760.1" y="-115" as="geometry" />
-        </mxCell>
-        <mxCell id="yqVIpSw8xP5mOf5R9uwY-53" parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;108 Uncas Street&lt;/h1&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;" vertex="1">
-          <mxGeometry height="120" width="252.47" x="587.53" y="-670" as="geometry" />
         </mxCell>
         <mxCell id="yqVIpSw8xP5mOf5R9uwY-54" parent="1" style="strokeColor=#666666;html=1;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;outlineConnect=0;shadow=0;dashed=0;shape=mxgraph.rackGeneral.rackCabinet3;fillColor2=#f4f4f4;container=0;collapsible=0;childLayout=rack;allowGaps=1;marginLeft=33;marginRight=9;marginTop=21;marginBottom=22;textColor=#666666;numDisp=ascend;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" value="" vertex="1">
           <mxGeometry height="390" width="204" x="35" y="-120" as="geometry" />
