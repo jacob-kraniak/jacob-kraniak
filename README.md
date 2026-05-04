@@ -3,9 +3,6 @@
 <p align="left"> <img src="https://komarev.com/ghpvc/?username=jacob-kraniak&label=Profile%20views&color=0e75b6&style=flat" alt="jacob-kraniak" /> </p>
 
 <p>
-I'm a builder, I always have projects ideas bouncing around in my head. 
-  SuperGrok 4.1 helps me guide these ideas to reality. 
-This Project ideation is being documented in /Project-ideas.
 
 Driving vision:
 
@@ -32,7 +29,7 @@ Actively maintaining foundational infrastructure skills while advancing in cyber
 
 | Certification | Issuer | Status | Issued | Expiration | Notes |
 |---------------|--------|--------|--------|------------|-------|
-| [CompTIA Server+ SK0-004](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/7) | CompTIA | Active | Nov 2017 | N/A | [Credly](https://www.credly.com/users/jacob-kraniak/badges) • [Issue #7](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/7) |
+| [CompTIA Server+ SK0-004](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/7) | CompTIA | Active | Nov 2017 | N/A | [Credly](https://www.credly.com/badges/1fc6fa72-65b5-4d96-bf02-88a27b0e71e2) • [Issue #7](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/7) |
 | [ISC² Certified in Cybersecurity (CC)](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/10) | ISC² | Active | May 2026 | N/A | [Credly](https://www.credly.com/users/jacob-kraniak/badges) • [Issue #10](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/10) |
 
 ### Ongoing Journey
