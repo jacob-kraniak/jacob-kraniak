@@ -32,7 +32,7 @@ Actively maintaining foundational infrastructure skills while advancing in cyber
 
 | Certification | Issuer | Status | Issued | Expiration | Notes |
 |---------------|--------|--------|--------|------------|-------|
-| [CompTIA Server+ SK0-004](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/7) | ISC² | Active | May 2026 | N/A | [Credly](https://www.credly.com/users/jacob-kraniak/badges) • [Issue #7](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/7) |
+| [CompTIA Server+ SK0-004](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/7) | CompTIA | Active | Nov 2017 | N/A | [Credly](https://www.credly.com/users/jacob-kraniak/badges) • [Issue #7](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/7) |
 | [ISC² Certified in Cybersecurity (CC)](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/10) | ISC² | Active | May 2026 | N/A | [Credly](https://www.credly.com/users/jacob-kraniak/badges) • [Issue #10](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/10) |
 
 ### Ongoing Journey
