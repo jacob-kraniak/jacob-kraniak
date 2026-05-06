@@ -20,11 +20,13 @@ _"Move fast and break things."_
 Actively maintaining foundational infrastructure skills while advancing in cybersecurity (inspired by [Paul Jerimy's Roadmap](https://pauljerimy.com/security-certification-roadmap) and [CyberSecCertificates](https://cyberseccertificates.com)).
 
 ### Active Badge
+
 <p align="center">
   <a href="https://www.credly.com/badges/1fc6fa72-65b5-4d96-bf02-88a27b0e71e2/public_url">
     <img src="https://raw.githubusercontent.com/jacob-kraniak/jacob-kraniak/main/images/comptia-server-certification.4.png" alt="CompTIA Server+" width="150" />
   </a>
 </p>
+
 ### Certification Details
 
 | Certification | Issuer | Status | Issued | Expiration | Notes |
