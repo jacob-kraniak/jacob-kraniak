@@ -44,26 +44,49 @@ jobs:
             core.setOutput("active_titles", JSON.stringify(activeTitles));
             console.log("Active titles:", activeTitles);
 
-      - name: Fetch Active Badges from Credly
+      - name: Fetch Credly Badges JSON (with debug)
         id: badges
         run: |
-          curl -s "https://www.credly.com/users/jacob-kraniak/badges.json" > badges.json
+          curl -sL "https://www.credly.com/users/jacob-kraniak/badges.json" -o badges.json
+          echo "=== badges.json (first 800 chars) ==="
+          head -c 800 badges.json
+          echo
+          echo "=== File type ==="
+          file badges.json
+          echo "=== jq type ==="
+          jq -r 'type' badges.json || echo "jq type failed"
 
+          # Check if valid JSON with .data array
+          if jq -e '.data | type == "array"' badges.json > /dev/null 2>&1; then
+            echo "Valid Credly structure detected"
+          else
+            echo "WARNING: badges.json does not contain expected .data array"
+            cat badges.json | head -c 500
+          fi
+
+      - name: Filter Active Badges
+        id: filter-badges
+        run: |
           ACTIVE_TITLES='${{ steps.active-titles.outputs.active_titles }}'
 
-          # Filter Credly badges to only those matching active titles (case-insensitive contains)
-          FILTERED_BADGES=$(jq -r --argjson active "$ACTIVE_TITLES" '
-            .data[] 
-            | select(.state == "accepted")
-            | select(
-                (.badge_template.name | ascii_downcase | contains($active[])) or 
-                ($active[] | contains(.badge_template.name | ascii_downcase))
-              )
-            | "\(.badge_template.image_url)|\(.badge_template.name)|\(.badge_template.public_url // .public_url)"
-          ' badges.json | head -n 8 | tr '\n' ';;' | sed 's/;;$//')
+          if [ -s badges.json ] && jq -e '.data | type == "array"' badges.json > /dev/null 2>&1; then
+            FILTERED_BADGES=$(jq -r --argjson active "$ACTIVE_TITLES" '
+              .data[] 
+              | select(.state == "accepted")
+              | select(
+                  (.badge_template.name | ascii_downcase | contains($active[])) or 
+                  ($active[] | contains(.badge_template.name | ascii_downcase))
+                )
+              | "\(.badge_template.image_url)|\(.badge_template.name)|\(.badge_template.public_url // .public_url)"
+            ' badges.json | head -n 8 | tr '\n' ';;' | sed 's/;;$//')
 
-          echo "BADGE_DATA=$FILTERED_BADGES" >> $GITHUB_ENV
-          echo "Found $(echo "$FILTERED_BADGES" | tr ';;' '\n' | wc -l | tr -d ' ') matching active badges"
+            echo "BADGE_DATA=$FILTERED_BADGES" >> $GITHUB_ENV
+            COUNT=$(echo "$FILTERED_BADGES" | tr ';;' '\n' | grep -c . || echo 0)
+            echo "Found $COUNT matching active badges"
+          else
+            echo "BADGE_DATA=" >> $GITHUB_ENV
+            echo "No valid Credly data - skipping badge update"
+          fi
 
       - name: Setup Python
         uses: actions/setup-python@v5
