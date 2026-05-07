@@ -24,6 +24,11 @@ Actively maintaining foundational infrastructure skills while advancing in cyber
 <p align="center">
 </p>
 
+### Active Badges
+
+<p align="center">
+</p>
+
 ### Certification Details
 
 | Certification | Issuer | Status | Issued | Expiration | Notes |
