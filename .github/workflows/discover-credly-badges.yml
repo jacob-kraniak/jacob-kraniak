@@ -53,40 +53,26 @@ jobs:
               }
 
               const issuedDate = badge.issued_at_date || 'Unknown';
-              const body = 
-                `**Credly Badge URL**: ${url}
-` +
-                `**Credly Badge ID**: ${id}
-` +
-                `**Date Certified**: ${issuedDate}
+              const body = `**Credly Badge URL**: ${url}
+**Credly Badge ID**: ${id}
+**Date Certified**: ${issuedDate}
 
-` +
-                `**Status:** Backlog
-` +
-                `**Target Completion:** TBD
-` +
-                `**Priority:** Medium
+**Status:** Backlog
+**Target Completion:** TBD
+**Priority:** Medium
 
-` +
-                `## Overview
+## Overview
 ${badge.badge_template.description || 'Certification earned on Credly.'}
 
-` +
-                `**Official Page:** ${badge.badge_template.url || 'https://www.credly.com'}
+**Official Page:** ${badge.badge_template.url || 'https://www.credly.com'}
 
-` +
-                `**Milestones / Tasks**
-` +
-                `- [ ] Claim badge on Credly (already done)
-` +
-                `- [ ] Add to Project Board
-` +
-                `- [ ] Update LinkedIn / resume
-` +
-                `- [ ] Plan renewal (if applicable)
+**Milestones / Tasks**
+- [ ] Claim badge on Credly (already done)
+- [ ] Add to Project Board
+- [ ] Update LinkedIn / resume
+- [ ] Plan renewal (if applicable)
 
-` +
-                `**Additional Labels:** credly, auto-created
+**Additional Labels:** credly, auto-created
 `;
 
               await github.rest.issues.create({
