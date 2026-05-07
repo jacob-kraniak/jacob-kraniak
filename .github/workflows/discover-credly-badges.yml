@@ -1,0 +1,91 @@
+name: Discover New Credly Badges
+
+on:
+  schedule:
+    - cron: '0 6 * * *'   # Daily at 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  discover-badges:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Fetch Credly Badges
+        run: |
+          curl -sL "https://www.credly.com/users/jacob-kraniak/badges.json?page=1&page_size=100" -o badges.json
+          echo "Total badges: $(jq '.data | length' badges.json)"
+
+      - name: Process New Badges
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const badges = JSON.parse(fs.readFileSync('badges.json', 'utf8')).data || [];
+
+            // Get existing issues (search for certification issues)
+            const { data: existingIssues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: 'cybersecurity-certification-tracker',
+              state: 'all',
+              per_page: 100
+            });
+
+            const existingTitles = new Set(existingIssues.map(i => i.title.toLowerCase()));
+
+            let created = 0;
+            for (const badge of badges) {
+              if (badge.state !== 'accepted' || !badge.badge_template) continue;
+
+              const name = badge.badge_template.name;
+              const id = badge.id;
+              const url = `https://www.credly.com/badges/${id}`;
+              const title = `[Certification] ${name}`;
+
+              if (existingTitles.has(title.toLowerCase())) {
+                console.log(`Skipping existing: ${name}`);
+                continue;
+              }
+
+              // Create new issue using the standardized template
+              const body = `**Credly Badge URL**: ${url}
+**Credly Badge ID**: ${id}
+**Date Certified**: ${badge.issued_at_date || 'Unknown'}
+
+**Status:** Backlog
+**Target Completion:** TBD
+**Priority:** Medium
+
+## Overview
+${badge.badge_template.description || 'Certification earned on Credly.'}
+
+**Official Page:** ${badge.badge_template.url || 'https://www.credly.com'}
+
+**Milestones / Tasks**
+- [ ] Claim badge on Credly (already done)
+- [ ] Add to Project Board
+- [ ] Update LinkedIn / resume
+- [ ] Plan renewal (if applicable)
+
+**Additional Labels:** credly, auto-created
+`;
+
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: 'cybersecurity-certification-tracker',
+                title: title,
+                body: body,
+                labels: ['certification', 'credly', 'auto-created']
+              });
+
+              console.log(`Created issue for: ${name}`);
+              created++;
+            }
+
+            console.log(`Total new issues created: ${created}`);
