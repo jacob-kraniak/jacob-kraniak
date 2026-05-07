@@ -1,37 +1,42 @@
-name: Update Active Credly Badge
+name: Update Active Credly Badges
 
 on:
   schedule:
-    - cron: '0 12 * * *'   # Daily at noon
+    - cron: '0 12 * * *'
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  update-badge:
+  update-badges:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Fetch Latest Active Badge from Credly
-        id: badge
+      - name: Fetch Active Badges from Credly
+        id: badges
         run: |
-          # Public Credly endpoint for your badges
           curl -s "https://www.credly.com/users/jacob-kraniak/badges.json" > badges.json
-          
-          # Get most recent active badge (adjust logic if needed)
-          LATEST=$(jq -r '.data[0] | select(.badge_template.state == "active") | "\(.badge_template.image_url)|\(.badge_template.name)|\(.badge_template.public_url)"' badges.json)
-          
-          echo "BADGE_DATA=$LATEST" >> $GITHUB_ENV
+          ACTIVE_BADGES=$(jq -r '.data[] | select(.state == "accepted") | "\(.badge_template.image_url)|\(.badge_template.name)|\(.badge_template.public_url // .public_url)"' badges.json | head -n 6 | tr '\n' ';;' | sed 's/;;$//')
+          echo "BADGE_DATA=$ACTIVE_BADGES" >> $GITHUB_ENV
+          echo "Found $(wc -l <<<"$ACTIVE_BADGES" | tr -d ' ') active badges"
 
-      - name: Update Active Badge Section in README
-        run: |
-          python scripts/update_active_badge.py "${BADGE_DATA}"
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
 
-      - name: Commit and push
+      - name: Install deps
+        run: pip install requests
+
+      - name: Update Badges + Download Images
+        run: python scripts/update_active_badge.py "$BADGE_DATA"
+
+      - name: Commit & Push
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "docs: auto-update Active Badge from Credly"
-          file_pattern: README.md
+          commit_message: "docs(mcp): auto-update Active Badges + high-res local /images/"
+          file_pattern: README.md images/*
+          branch: main
