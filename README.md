@@ -27,7 +27,6 @@ Actively maintaining foundational infrastructure skills while advancing in cyber
   </a>
 </p>
 
-
 ### Certification Details
 
 | Certification | Issuer | Status | Issued | Expiration | Notes |
