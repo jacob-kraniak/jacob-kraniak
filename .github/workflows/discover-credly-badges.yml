@@ -2,7 +2,7 @@ name: Discover New Credly Badges
 
 on:
   schedule:
-    - cron: '0 6 * * *'   # Daily at 06:00 UTC
+    - cron: '0 6 * * *'
   workflow_dispatch:
 
 permissions:
@@ -20,7 +20,6 @@ jobs:
       - name: Fetch Credly Badges
         run: |
           curl -sL "https://www.credly.com/users/jacob-kraniak/badges.json?page=1&page_size=100" -o badges.json
-          echo "Total badges: $(jq '.data | length' badges.json)"
 
       - name: Process New Badges
         uses: actions/github-script@v7
