@@ -22,9 +22,6 @@ Actively maintaining foundational infrastructure skills while advancing in cyber
 ### Active Badges
 
 <p align="center">
-  <a href="null;https://images.credly.com/images/f6d62c5d-1e1d-4de6-92ee-8dc8c80b1c7b/blob|CompTIA A+ ce Certification|null;https://images.credly.com/images/c70ba73e-3c8a-46fa-9d60-4a9af94ad662/blob|CompTIA Network+ ce Certification|null;https://images.credly.com/images/2859c37a-015b-40a6-b570-4bdd7e849b05/image.png|Certified in Cybersecurity (CC)|null;https://images.credly.com/images/07378420-4407-4f09-a4d7-9301d87dec34/blob|CompTIA Server+ ce Certification|null;https://images.credly.com/images/9180921d-4a13-429e-9357-6f9706a554f0/image.png|ISC2 Candidate|null;">
-    <img src="images/comptia_server_certification.png" alt="CompTIA Server+ Certification" width="180" style="margin: 8px;" />
-  </a>
 </p>
 
 ### Certification Details
