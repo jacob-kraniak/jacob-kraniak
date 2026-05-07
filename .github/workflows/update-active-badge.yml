@@ -44,48 +44,54 @@ jobs:
             core.setOutput("active_titles", JSON.stringify(activeTitles));
             console.log("Active titles:", activeTitles);
 
-      - name: Fetch Credly Badges JSON (with debug)
-        id: badges
+      - name: Fetch Credly Badges (robust)
+        id: fetch-badges
         run: |
-          curl -sL "https://www.credly.com/users/jacob-kraniak/badges.json" -o badges.json
-          echo "=== badges.json (first 800 chars) ==="
-          head -c 800 badges.json
-          echo
-          echo "=== File type ==="
-          file badges.json
-          echo "=== jq type ==="
-          jq -r 'type' badges.json || echo "jq type failed"
+          curl -sL -H "Accept: application/json" \
+               "https://www.credly.com/users/jacob-kraniak/badges.json?page=1&page_size=50" \
+               -o badges.json
 
-          # Check if valid JSON with .data array
+          echo "=== badges.json size: $(wc -c < badges.json) bytes ==="
+          echo "=== First 600 chars ==="
+          head -c 600 badges.json
+          echo
+          echo "=== jq type ==="
+          jq -r 'type' badges.json || true
+
+          # Validate structure
           if jq -e '.data | type == "array"' badges.json > /dev/null 2>&1; then
-            echo "Valid Credly structure detected"
+            echo "✓ Valid .data array found"
+            echo "Total badges in response: $(jq '.data | length' badges.json)"
+            echo "Sample badge names:"
+            jq -r '.data[0:5] | .[] | .badge_template.name // "(no name)"' badges.json || true
           else
-            echo "WARNING: badges.json does not contain expected .data array"
-            cat badges.json | head -c 500
+            echo "✗ Invalid structure - dumping head"
+            head -c 400 badges.json
           fi
 
-      - name: Filter Active Badges
-        id: filter-badges
+      - name: Filter & Format Active Badges
+        id: filter
         run: |
           ACTIVE_TITLES='${{ steps.active-titles.outputs.active_titles }}'
 
           if [ -s badges.json ] && jq -e '.data | type == "array"' badges.json > /dev/null 2>&1; then
             FILTERED_BADGES=$(jq -r --argjson active "$ACTIVE_TITLES" '
-              .data[] 
+              .data[]
               | select(.state == "accepted")
+              | select(.badge_template != null)
               | select(
-                  (.badge_template.name | ascii_downcase | contains($active[])) or 
+                  (.badge_template.name | ascii_downcase | contains($active[])) or
                   ($active[] | contains(.badge_template.name | ascii_downcase))
                 )
-              | "\(.badge_template.image_url)|\(.badge_template.name)|\(.badge_template.public_url // .public_url)"
-            ' badges.json | head -n 8 | tr '\n' ';;' | sed 's/;;$//')
+              | "\(.badge_template.image_url // "")|\(.badge_template.name // "")|\(.badge_template.public_url // .public_url // "")"
+            ' badges.json | grep -v '^||' | head -n 8 | tr '\n' ';;' | sed 's/;;$//')
 
             echo "BADGE_DATA=$FILTERED_BADGES" >> $GITHUB_ENV
-            COUNT=$(echo "$FILTERED_BADGES" | tr ';;' '\n' | grep -c . || echo 0)
-            echo "Found $COUNT matching active badges"
+            COUNT=$(echo "$FILTERED_BADGES" | grep -o ';;' | wc -l | awk '{print $1 + 1}')
+            echo "Found $COUNT matching active badges after filtering"
           else
             echo "BADGE_DATA=" >> $GITHUB_ENV
-            echo "No valid Credly data - skipping badge update"
+            echo "Skipping - invalid or empty Credly data"
           fi
 
       - name: Setup Python
@@ -102,6 +108,6 @@ jobs:
       - name: Commit & Push
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "docs(mcp): auto-update Active Badges (filtered to Project Board Active) + high-res local /images/"
+          commit_message: "docs(mcp): auto-update Active Badges (Project Board filtered) + high-res images"
           file_pattern: README.md images/*
           branch: main
