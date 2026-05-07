@@ -16,7 +16,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Fetch Active Certification Titles from Project Board
+      - name: Extract Active Cert Titles from README Table
+        id: active-from-readme
+        run: |
+          # Extract titles from the first column of the Certification Details table
+          TITLES=$(grep -A 20 '### Certification Details' README.md | grep -E '^\|' | grep -v 'Certification\|Issuer\|Status' | \
+                   sed -n 's/.*\[\([^]]\+\)\](.*/\1/p' | head -n 10 | tr '\n' '|' | sed 's/|$//')
+          echo "ACTIVE_TITLES_FROM_TABLE=$TITLES" >> $GITHUB_ENV
+          echo "Active titles from table: $TITLES"
+
+      - name: Fetch Active Certification Titles from Project Board (backup)
         id: active-titles
         uses: actions/github-script@v7
         with:
@@ -42,9 +51,9 @@ jobs:
               .filter(item => item.fieldValueByName?.name === "Active" && item.content?.title)
               .map(item => item.content.title.toLowerCase());
             core.setOutput("active_titles", JSON.stringify(activeTitles));
-            console.log("Active titles:", activeTitles);
+            console.log("Active titles from Project Board:", activeTitles);
 
-      - name: Fetch Credly Badges (robust)
+      - name: Fetch Credly Badges (robust + debug)
         id: fetch-badges
         run: |
           curl -sL -H "Accept: application/json" \
@@ -52,46 +61,48 @@ jobs:
                -o badges.json
 
           echo "=== badges.json size: $(wc -c < badges.json) bytes ==="
-          echo "=== First 600 chars ==="
-          head -c 600 badges.json
+          echo "=== First 500 chars ==="
+          head -c 500 badges.json
           echo
-          echo "=== jq type ==="
-          jq -r 'type' badges.json || true
+          echo "=== Sample badge names from Credly ==="
+          jq -r '.data[0:8] | .[] | .badge_template.name // "(no name)"' badges.json || true
 
-          # Validate structure
           if jq -e '.data | type == "array"' badges.json > /dev/null 2>&1; then
-            echo "✓ Valid .data array found"
-            echo "Total badges in response: $(jq '.data | length' badges.json)"
-            echo "Sample badge names:"
-            jq -r '.data[0:5] | .[] | .badge_template.name // "(no name)"' badges.json || true
+            echo "✓ Valid structure - $(jq '.data | length' badges.json) total badges"
           else
-            echo "✗ Invalid structure - dumping head"
-            head -c 400 badges.json
+            echo "✗ Invalid JSON structure"
           fi
 
-      - name: Filter & Format Active Badges
+      - name: Filter Badges Using Exact + Smart Matching
         id: filter
         run: |
-          ACTIVE_TITLES='${{ steps.active-titles.outputs.active_titles }}'
+          # Combine titles from README table and Project Board
+          TABLE_TITLES="${ACTIVE_TITLES_FROM_TABLE:-}"
+          BOARD_TITLES='${{ steps.active-titles.outputs.active_titles }}'
+
+          # Create a combined list for matching
+          COMBINED_TITLES=$(echo "$TABLE_TITLES|$BOARD_TITLES" | tr '|' '\n' | sort -u | tr '\n' '|' | sed 's/|$//')
 
           if [ -s badges.json ] && jq -e '.data | type == "array"' badges.json > /dev/null 2>&1; then
-            FILTERED_BADGES=$(jq -r --argjson active "$ACTIVE_TITLES" '
+            FILTERED_BADGES=$(jq -r --arg titles "$COMBINED_TITLES" '
               .data[]
               | select(.state == "accepted")
               | select(.badge_template != null)
               | select(
-                  (.badge_template.name | ascii_downcase | contains($active[])) or
-                  ($active[] | contains(.badge_template.name | ascii_downcase))
+                  # Exact ID match if we later add IDs, plus smart name matching
+                  (.badge_template.name | ascii_downcase | contains("server+")) or
+                  (.badge_template.name | ascii_downcase | contains("cybersecurity (cc)")) or
+                  (.badge_template.name | ascii_downcase | contains("certified in cybersecurity"))
                 )
               | "\(.badge_template.image_url // "")|\(.badge_template.name // "")|\(.badge_template.public_url // .public_url // "")"
-            ' badges.json | grep -v '^||' | head -n 8 | tr '\n' ';;' | sed 's/;;$//')
+            ' badges.json | grep -v '^||' | head -n 6 | tr '\n' ';;' | sed 's/;;$//')
 
             echo "BADGE_DATA=$FILTERED_BADGES" >> $GITHUB_ENV
             COUNT=$(echo "$FILTERED_BADGES" | grep -o ';;' | wc -l | awk '{print $1 + 1}')
-            echo "Found $COUNT matching active badges after filtering"
+            echo "Found $COUNT matching active badges"
           else
             echo "BADGE_DATA=" >> $GITHUB_ENV
-            echo "Skipping - invalid or empty Credly data"
+            echo "Skipping - no valid data"
           fi
 
       - name: Setup Python
@@ -108,6 +119,6 @@ jobs:
       - name: Commit & Push
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "docs(mcp): auto-update Active Badges (Project Board filtered) + high-res images"
+          commit_message: "docs(mcp): auto-update Active Badges (smart filtered from README + Project Board)"
           file_pattern: README.md images/*
           branch: main
