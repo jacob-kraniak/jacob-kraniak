@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  issues: read
 
 jobs:
   update-badges:
@@ -15,13 +16,54 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Fetch Active Certification Titles from Project Board
+        id: active-titles
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const projectNumber = 3;
+            const owner = "jacob-kraniak";
+
+            const query = `query($owner: String!, $projectNumber: Int!) {
+              user(login: $owner) {
+                projectV2(number: $projectNumber) {
+                  items(first: 100) {
+                    nodes {
+                      content { ... on Issue { title } }
+                      fieldValueByName(name: "Status") { ... on ProjectV2ItemFieldSingleSelectValue { name } }
+                    }
+                  }
+                }
+              }
+            }`;
+
+            const result = await github.graphql(query, { owner, projectNumber });
+            const activeTitles = result.user.projectV2.items.nodes
+              .filter(item => item.fieldValueByName?.name === "Active" && item.content?.title)
+              .map(item => item.content.title.toLowerCase());
+            core.setOutput("active_titles", JSON.stringify(activeTitles));
+            console.log("Active titles:", activeTitles);
+
       - name: Fetch Active Badges from Credly
         id: badges
         run: |
           curl -s "https://www.credly.com/users/jacob-kraniak/badges.json" > badges.json
-          ACTIVE_BADGES=$(jq -r '.data[] | select(.state == "accepted") | "\(.badge_template.image_url)|\(.badge_template.name)|\(.badge_template.public_url // .public_url)"' badges.json | head -n 6 | tr '\n' ';;' | sed 's/;;$//')
-          echo "BADGE_DATA=$ACTIVE_BADGES" >> $GITHUB_ENV
-          echo "Found $(wc -l <<<"$ACTIVE_BADGES" | tr -d ' ') active badges"
+
+          ACTIVE_TITLES='${{ steps.active-titles.outputs.active_titles }}'
+
+          # Filter Credly badges to only those matching active titles (case-insensitive contains)
+          FILTERED_BADGES=$(jq -r --argjson active "$ACTIVE_TITLES" '
+            .data[] 
+            | select(.state == "accepted")
+            | select(
+                (.badge_template.name | ascii_downcase | contains($active[])) or 
+                ($active[] | contains(.badge_template.name | ascii_downcase))
+              )
+            | "\(.badge_template.image_url)|\(.badge_template.name)|\(.badge_template.public_url // .public_url)"
+          ' badges.json | head -n 8 | tr '\n' ';;' | sed 's/;;$//')
+
+          echo "BADGE_DATA=$FILTERED_BADGES" >> $GITHUB_ENV
+          echo "Found $(echo "$FILTERED_BADGES" | tr ';;' '\n' | wc -l | tr -d ' ') matching active badges"
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -37,6 +79,6 @@ jobs:
       - name: Commit & Push
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "docs(mcp): auto-update Active Badges + high-res local /images/"
+          commit_message: "docs(mcp): auto-update Active Badges (filtered to Project Board Active) + high-res local /images/"
           file_pattern: README.md images/*
           branch: main
