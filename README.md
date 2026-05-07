@@ -26,6 +26,8 @@ Actively maintaining foundational infrastructure skills while advancing in cyber
     <img src="images/comptia_server_certification.png" alt="CompTIA Server+ Certification" width="180" style="margin: 8px;" />
   </a>
 </p>
+
+
 ### Certification Details
 
 | Certification | Issuer | Status | Issued | Expiration | Notes |
