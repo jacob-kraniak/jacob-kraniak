@@ -29,10 +29,11 @@ Actively maintaining foundational infrastructure skills while advancing in cyber
 
 ### Certification Details
 
-| Certification | Issuer | Status | Issued | Expiration | Tracking Issue |
-|---------------|--------|--------|--------|------------|----------------|
-| [CompTIA Server+ SK0-004](https://www.credly.com/users/jacob-kraniak/badges) | CompTIA | Active | May 2026 | N/A | [Issue #7](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/7) |
-| [ISC² Certified in Cybersecurity (CC)](https://www.credly.com/users/jacob-kraniak/badges) | ISC² | Active | May 2026 | N/A | [Issue #10](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/10) |
+| Certification | Issuer | Status | Issued | Expiration | Notes |
+|---------------|--------|--------|--------|------------|-------|
+| [CompTIA Server+ SK0-004](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/7) | ISC² | Active | May 2026 | N/A | [Credly](https://www.credly.com/users/jacob-kraniak/badges) • [Issue #7](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/7) |
+| [ISC² Certified in Cybersecurity (CC)](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/10) | ISC² | Active | May 2026 | N/A | [Credly](https://www.credly.com/users/jacob-kraniak/badges) • [Issue #10](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/10) |
+| [Microsoft MTA 98-366 - Networking Fundamentals (Historical)](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/24) | ISC² | Active | May 2026 | N/A | [Credly](https://www.credly.com/users/jacob-kraniak/badges) • [Issue #24](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/24) |
 
 ### Ongoing Journey
 Researching and tracking next certifications (e.g., Security+ as immediate next step → CySA+ → advanced paths like CISSP or specialized domains).  
