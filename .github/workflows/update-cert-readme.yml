@@ -5,7 +5,7 @@ on:
     types: [edited, reopened, closed]
   workflow_dispatch:
   schedule:
-    - cron: '0 8 * * *'
+    - cron: '0 8 * * *'   # Daily at 8 AM UTC
 
 permissions:
   contents: write
@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Fetch Cert Data from Tracker Issues
+      - name: Fetch Cert Data from Tracker Issues (Active Only)
         uses: actions/github-script@v7
         id: cert-data
         with:
@@ -32,33 +32,26 @@ jobs:
 
             let rows = '';
             const certIssues = issues.filter(i => 
-              i.title.includes('CompTIA') || i.title.includes('ISC') || 
-              i.labels.some(l => ['credly', 'certification'].includes(l.name.toLowerCase()))
+              // Strict Active label filter (case-insensitive)
+              i.labels.some(l => l.name.toLowerCase() === 'active')
             );
 
             for (const issue of certIssues.sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at))) {
               const body = issue.body || '';
               
+              // Extract Issuer and Issued Date from issue body (Credly synced)
               const issuerMatch = body.match(/\*\*Issuer\*\*:\s*(.+?)(?:\n|$)/i) || 
                                  body.match(/Issuer:\s*(.+?)(?:\n|$)/i);
-              const dateMatch = body.match(/\*\*Date Certified\*\*:\s*(\d{4}-\d{2}-\d{2})/i);
+              const dateMatch = body.match(/\*\*Date Certified\*\*:\s*(\d{4}-\d{2}-\d{2})/i) ||
+                               body.match(/issued_at_date["']\s*:\s*["']([^"']+)/i);
               
-              const issuer = (issuerMatch ? issuerMatch[1].trim() : 'Unknown').replace(/^\*\*/, '');
-              const issued = dateMatch ? dateMatch[1] : 'N/A';
+              const issuer = (issuerMatch ? issuerMatch[1].trim() : 'Unknown').replace(/^\*\*/, '').trim();
+              const issued = dateMatch ? dateMatch[1].trim() : 'N/A';
               
-              const name = issue.title.replace(/\s*\(.*\)/, '').trim();
+              const name = issue.title.replace(/\s*\(.*?\)/, '').trim();
               const url = `https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/${issue.number}`;
               
               rows += `| [${name}](${url}) | ${issuer} | Active | ${issued} | N/A | [Credly](https://www.credly.com/users/jacob-kraniak/badges) • [Issue #${issue.number}](${url}) |\n`;
             }
 
-            core.setOutput('table_rows', rows || '| No certifications found | - | - | - | - | - |');
-
-      - name: Update README with Python
-        run: python scripts/update_certs.py "${{ steps.cert-data.outputs.table_rows }}"
-
-      - name: Commit and push changes
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: 'docs: auto-update cert table from tracker issues [skip ci]'
-          file_pattern: README.md
+            core.setOutput('table_rows', rows || '| No Active certifications found | - | - | - | - | - |');
