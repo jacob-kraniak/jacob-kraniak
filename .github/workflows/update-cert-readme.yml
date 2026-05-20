@@ -4,6 +4,8 @@ on:
   issues:
     types: [edited, reopened, closed]
   workflow_dispatch:
+  schedule:
+    - cron: '0 8 * * *'
 
 permissions:
   contents: write
@@ -16,36 +18,41 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Fetch Cert Status from Project Board
+      - name: Fetch Cert Data from Tracker Issues
         uses: actions/github-script@v7
         id: cert-data
         with:
           script: |
-            const projectNumber = 3;
-            const owner = "jacob-kraniak";
-            
-            const query = `query($owner: String!, $projectNumber: Int!) {
-              user(login: $owner) {
-                projectV2(number: $projectNumber) {
-                  items(first: 100) {
-                    nodes {
-                      content { ... on Issue { number title url } }
-                      fieldValueByName(name: "Status") { ... on ProjectV2ItemFieldSingleSelectValue { name } }
-                    }
-                  }
-                }
-              }
-            }`;
-            
-            const result = await github.graphql(query, { owner, projectNumber });
-            let rows = "";
-            result.user.projectV2.items.nodes.forEach(item => {
-              if (item.content) {
-                const status = item.fieldValueByName?.name || "Unknown";
-                if (status === "Active") {rows += `| [${item.content.title}](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/${item.content.number}) | ISC² | Active | May 2026 | N/A | [Credly](https://www.credly.com/users/jacob-kraniak/badges) • [Issue #${item.content.number}](${item.content.url}) |\n`;}
-              }
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: 'jacob-kraniak',
+              repo: 'cybersecurity-certification-tracker',
+              state: 'all',
+              per_page: 100
             });
-            core.setOutput("table_rows", rows || "| No active certifications found. | - | - | - | - | - |");
+
+            let rows = '';
+            const certIssues = issues.filter(i => 
+              i.title.includes('CompTIA') || i.title.includes('ISC') || 
+              i.labels.some(l => ['credly', 'certification'].includes(l.name.toLowerCase()))
+            );
+
+            for (const issue of certIssues.sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at))) {
+              const body = issue.body || '';
+              
+              const issuerMatch = body.match(/\*\*Issuer\*\*:\s*(.+?)(?:\n|$)/i) || 
+                                 body.match(/Issuer:\s*(.+?)(?:\n|$)/i);
+              const dateMatch = body.match(/\*\*Date Certified\*\*:\s*(\d{4}-\d{2}-\d{2})/i);
+              
+              const issuer = (issuerMatch ? issuerMatch[1].trim() : 'Unknown').replace(/^\*\*/, '');
+              const issued = dateMatch ? dateMatch[1] : 'N/A';
+              
+              const name = issue.title.replace(/\s*\(.*\)/, '').trim();
+              const url = `https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/${issue.number}`;
+              
+              rows += `| [${name}](${url}) | ${issuer} | Active | ${issued} | N/A | [Credly](https://www.credly.com/users/jacob-kraniak/badges) • [Issue #${issue.number}](${url}) |\n`;
+            }
+
+            core.setOutput('table_rows', rows || '| No certifications found | - | - | - | - | - |');
 
       - name: Update README with Python
         run: python scripts/update_certs.py "${{ steps.cert-data.outputs.table_rows }}"
@@ -53,5 +60,5 @@ jobs:
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "docs: auto-update certifications from project board (CC test)"
+          commit_message: 'docs: auto-update cert table from tracker issues [skip ci]'
           file_pattern: README.md
