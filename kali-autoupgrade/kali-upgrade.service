@@ -1,0 +1,31 @@
+[Unit]
+Description=Kali Linux weekly full system upgrade (update + upgrade + full-upgrade + autoremove)
+Documentation=https://www.kali.org/docs/general/upgrade/
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/jacob/bin/kali-upgrade.sh -y
+User=root
+Group=root
+
+# Logging - goes to journalctl
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=kali-upgrade
+
+# Be nice to the system (lower priority)
+Nice=10
+CPUSchedulingPolicy=batch
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7
+
+# Reasonable security hardening while still allowing apt to function
+ProtectSystem=full
+ProtectHome=read-only
+PrivateTmp=true
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

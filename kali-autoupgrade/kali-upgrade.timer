@@ -1,0 +1,18 @@
+[Unit]
+Description=Run Kali full system upgrade weekly
+Requires=kali-upgrade.service
+
+[Timer]
+# Runs once per week. Default is Sunday at 00:00.
+# You can change this to something like "Mon 04:00" or "weekly".
+OnCalendar=weekly
+
+# If the system was powered off when the timer should have fired,
+# it will run shortly after the next boot.
+Persistent=true
+
+# Spread the load a bit (useful if you have multiple machines)
+RandomizedDelaySec=45min
+
+[Install]
+WantedBy=timers.target
