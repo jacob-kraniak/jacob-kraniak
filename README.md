@@ -23,7 +23,7 @@ Actively maintaining foundational infrastructure skills while advancing in cyber
 
 <p align="center">
   <a href="https://images.credly.com/images/2859c37a-015b-40a6-b570-4bdd7e849b05/image.png">
-    <img src="https://images.credly.com/images/ff6cecf9-8aca-43c5-8070-44023bb55417/blob" alt="CompTIA Server+ Certification" width="180" style="margin: 8px;" />
+    <img src="images/comptia_server_certification.png" alt="CompTIA Server+ Certification" width="180" style="margin: 8px;" />
   </a>
 </p>
 
