@@ -19,11 +19,29 @@ jobs:
       - name: Extract Active Cert Titles from README Table
         id: active-from-readme
         run: |
-          # Extract titles from the first column of the Certification Details table
-          TITLES=$(grep -A 20 '### Certification Details' README.md | grep -E '^\|' | grep -v 'Certification\|Issuer\|Status' | \
-                   sed -n 's/.*\[\([^]]\+\)\](.*/\1/p' | head -n 10 | tr '\n' '|' | sed 's/|$//')
-          echo "ACTIVE_TITLES_FROM_TABLE=$TITLES" >> $GITHUB_ENV
-          echo "Active titles from table: $TITLES"
+          # First markdown link in each Certification Details row = cert name
+          # (NOT the Notes-column "Issue #N" link — greedy .* was matching that)
+          python3 << 'PY'
+          import re
+          from pathlib import Path
+          text = Path("README.md").read_text(encoding="utf-8")
+          m = re.search(r"### Certification Details([\s\S]*?)(?=\n### |\n## |\Z)", text)
+          titles = []
+          if m:
+              for line in m.group(1).splitlines():
+                  if not line.strip().startswith("|"):
+                      continue
+                  if re.search(r"Certification\s*\|\s*Issuer|---", line):
+                      continue
+                  # first [text](url) on the row
+                  link = re.search(r"\[\s*([^\]]+?)\s*\]\([^)]+\)", line)
+                  if link:
+                      title = link.group(1).strip()
+                      if title and not title.lower().startswith("issue #"):
+                          titles.append(title)
+          Path("active_titles_readme.txt").write_text("\n".join(titles), encoding="utf-8")
+          print("Active titles from table:", titles)
+          PY
 
       - name: Fetch Active Certification Titles from Project Board (backup)
         id: active-titles
@@ -32,78 +50,135 @@ jobs:
           script: |
             const projectNumber = 3;
             const owner = "jacob-kraniak";
-
             const query = `query($owner: String!, $projectNumber: Int!) {
               user(login: $owner) {
                 projectV2(number: $projectNumber) {
                   items(first: 100) {
                     nodes {
                       content { ... on Issue { title } }
-                      fieldValueByName(name: "Status") { ... on ProjectV2ItemFieldSingleSelectValue { name } }
+                      fieldValueByName(name: "Status") {
+                        ... on ProjectV2ItemFieldSingleSelectValue { name }
+                      }
                     }
                   }
                 }
               }
             }`;
-
-            const result = await github.graphql(query, { owner, projectNumber });
-            const activeTitles = result.user.projectV2.items.nodes
-              .filter(item => item.fieldValueByName?.name === "Active" && item.content?.title)
-              .map(item => item.content.title.toLowerCase());
-            core.setOutput("active_titles", JSON.stringify(activeTitles));
+            let activeTitles = [];
+            try {
+              const result = await github.graphql(query, { owner, projectNumber });
+              activeTitles = result.user.projectV2.items.nodes
+                .filter(item => item.fieldValueByName?.name === "Active" && item.content?.title)
+                .map(item => item.content.title);
+            } catch (e) {
+              console.log("Project Board query failed (continuing with README titles):", e.message || e);
+            }
+            const fs = require("fs");
+            fs.writeFileSync("active_titles_board.json", JSON.stringify(activeTitles));
             console.log("Active titles from Project Board:", activeTitles);
 
-      - name: Fetch Credly Badges (robust + debug)
-        id: fetch-badges
+      - name: Fetch Credly Badges
         run: |
           curl -sL -H "Accept: application/json" \
                "https://www.credly.com/users/jacob-kraniak/badges.json?page=1&page_size=50" \
                -o badges.json
-
           echo "=== badges.json size: $(wc -c < badges.json) bytes ==="
-          echo "=== First 500 chars ==="
-          head -c 500 badges.json
-          echo
-          echo "=== Sample badge names from Credly ==="
-          jq -r '.data[0:8] | .[] | .badge_template.name // "(no name)"' badges.json || true
-
-          if jq -e '.data | type == "array"' badges.json > /dev/null 2>&1; then
-            echo "✓ Valid structure - $(jq '.data | length' badges.json) total badges"
-          else
-            echo "✗ Invalid JSON structure"
+          jq -r '.data[]? | select(.state=="accepted") | .badge_template.name // "(no name)"' badges.json || true
+          if ! jq -e '.data | type == "array"' badges.json > /dev/null 2>&1; then
+            echo "::error::Invalid Credly badges.json structure"
+            exit 1
           fi
 
-      - name: Filter Badges Using Exact + Smart Matching
-        id: filter
+      - name: Filter Badges Against README + Board Titles
         run: |
-          # Combine titles from README table and Project Board
-          TABLE_TITLES="${ACTIVE_TITLES_FROM_TABLE:-}"
-          BOARD_TITLES='${{ steps.active-titles.outputs.active_titles }}'
+          python3 << 'PY'
+          import json, re
+          from pathlib import Path
 
-          # Create a combined list for matching
-          COMBINED_TITLES=$(echo "$TABLE_TITLES|$BOARD_TITLES" | tr '|' '\n' | sort -u | tr '\n' '|' | sed 's/|$//')
+          def norm(s: str) -> str:
+              return re.sub(r"[^a-z0-9]+", " ", (s or "").lower()).strip()
 
-          if [ -s badges.json ] && jq -e '.data | type == "array"' badges.json > /dev/null 2>&1; then
-            FILTERED_BADGES=$(jq -r --arg titles "$COMBINED_TITLES" '
-              .data[]
-              | select(.state == "accepted")
-              | select(.badge_template != null)
-              | select(
-                  # Exact ID match if we later add IDs, plus smart name matching
-                  (.badge_template.name | ascii_downcase | contains("server+")) or
-                  (.badge_template.name | ascii_downcase | contains("cybersecurity (cc)")) or
-                  (.badge_template.name | ascii_downcase | contains("certified in cybersecurity"))
-                )
-              | "\(.badge_template.image_url // "")|\(.badge_template.name // "")|\(.badge_template.public_url // .public_url // "")"
-            ' badges.json | grep -v '^||' | head -n 6 | tr '\n' ';;' | sed 's/;;$//')
+          def tokens(s: str) -> set[str]:
+              stop = {"certification", "certified", "ce", "the", "in", "and", "of", "a", "plus"}
+              return {t for t in norm(s).split() if len(t) > 1 and t not in stop}
 
-            echo "BADGE_DATA=$FILTERED_BADGES" >> $GITHUB_ENV
-            COUNT=$(echo "$FILTERED_BADGES" | grep -o ';;' | wc -l | awk '{print $1 + 1}')
-            echo "Found $COUNT matching active badges"
-          else
-            echo "BADGE_DATA=" >> $GITHUB_ENV
-            echo "Skipping - no valid data"
-          fi
+          titles = []
+          p = Path("active_titles_readme.txt")
+          if p.exists():
+              titles.extend([t.strip() for t in p.read_text(encoding="utf-8").splitlines() if t.strip()])
+          bp = Path("active_titles_board.json")
+          if bp.exists():
+              try:
+                  titles.extend(json.loads(bp.read_text(encoding="utf-8")))
+              except json.JSONDecodeError:
+                  pass
+          # unique preserve order
+          seen = set()
+          uniq_titles = []
+          for t in titles:
+              k = norm(t)
+              if k and k not in seen:
+                  seen.add(k)
+                  uniq_titles.append(t)
+          print("Combined titles:", uniq_titles)
+
+          raw = json.loads(Path("badges.json").read_text(encoding="utf-8"))
+          badges = [b for b in (raw.get("data") or []) if b.get("state") == "accepted" and b.get("badge_template")]
+
+          def matches(badge_name: str) -> bool:
+              bt = tokens(badge_name)
+              bn = norm(badge_name)
+              if not uniq_titles:
+                  # No title list → include all accepted (safe fallback)
+                  return True
+              for title in uniq_titles:
+                  tt = tokens(title)
+                  tn = norm(title)
+                  if not tt:
+                      continue
+                  # mutual containment of normalized strings or token overlap
+                  if tn in bn or bn in tn:
+                      return True
+                  overlap = tt & bt
+                  if len(overlap) >= 2:
+                      return True
+                  # strong single-token matches for short names (A+, CC, Server+, Network+)
+                  strong = {"server", "network", "cybersecurity", "cc"}
+                  if overlap & strong:
+                      return True
+                  if "a" in tt and ("a" in bt or "a+" in tn or "a+" in bn or re.search(r"\ba\+", tn) or re.search(r"\ba\+", bn)):
+                      return True
+                  # CompTIA A+ title tokens may just be {'comptia'} after stopwords — handle explicitly
+                  if re.search(r"\ba\+", tn) and re.search(r"\ba\+", bn):
+                      return True
+                  if "comptia" in tt and "comptia" in bt and (tt & bt) - {"comptia"}:
+                      return True
+              return False
+
+          filtered = []
+          for b in badges:
+              t = b["badge_template"]
+              name = t.get("name") or ""
+              if not matches(name):
+                  print("Skip (no title match):", name)
+                  continue
+              image = t.get("image_url") or ""
+              # Prefer public badge page URL
+              url = f"https://www.credly.com/badges/{b.get('id')}" if b.get("id") else (t.get("url") or t.get("public_url") or "")
+              if not image or not name:
+                  continue
+              filtered.append({
+                  "id": b.get("id"),
+                  "name": name,
+                  "image_url": image,
+                  "url": url,
+                  "issued_at_date": b.get("issued_at_date"),
+              })
+              print("Keep:", name)
+
+          Path("filtered_badges.json").write_text(json.dumps(filtered, indent=2), encoding="utf-8")
+          print(f"Wrote filtered_badges.json with {len(filtered)} badges")
+          PY
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -114,11 +189,11 @@ jobs:
         run: pip install requests
 
       - name: Update Badges + Download Images
-        run: python scripts/update_active_badge.py "$BADGE_DATA"
+        run: python scripts/update_active_badge.py
 
       - name: Commit & Push
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "docs(mcp): auto-update Active Badges (smart filtered from README + Project Board)"
+          commit_message: "docs(mcp): auto-update Active Badges (matched from README + Project Board)"
           file_pattern: README.md images/*
           branch: main
