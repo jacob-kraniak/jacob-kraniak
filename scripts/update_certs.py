@@ -70,6 +70,20 @@ def parse_date(raw: str | None) -> str | None:
     return s
 
 
+def issued_sort_key(issued: str) -> tuple[int, int, int]:
+    """Newest-first sort key. Undated / N/A sorts last when reverse=True."""
+    if not issued or issued.strip().upper() in {"N/A", "", "-"}:
+        return (0, 0, 0)
+    parts = issued.strip().split("-")
+    try:
+        y = int(parts[0]) if len(parts) >= 1 and parts[0].isdigit() else 0
+        m = int(parts[1]) if len(parts) >= 2 and parts[1].isdigit() else 0
+        d = int(parts[2]) if len(parts) >= 3 and parts[2].isdigit() else 0
+    except ValueError:
+        return (0, 0, 0)
+    return (y, m, d)
+
+
 def field(body: str, *names: str) -> str | None:
     for name in names:
         m = re.search(
@@ -192,10 +206,10 @@ def main() -> None:
         issues = json.loads(issues_path.read_text(encoding="utf-8"))
 
     cert_issues = [i for i in issues if is_cert_issue(i)]
-    # Prefer issues that link Credly / have earned dates; keep stable order by issue number
+    # Collect cert rows; final table sorted newest-first by Issued
     cert_issues.sort(key=lambda i: i.get("number") or 0)
 
-    rows: list[str] = []
+    rows: list[dict] = []
     used_badge_ids: set[str] = set()
 
     for issue in cert_issues:
@@ -239,7 +253,10 @@ def main() -> None:
             notes = f"[Issue #{number}]({url})"
 
         rows.append(
-            f"| [{name}]({url}) | {issuer} | {status} | {issued} | {expiration} | {notes} |"
+            {
+                "issued": issued,
+                "line": f"| [{name}]({url}) | {issuer} | {status} | {issued} | {expiration} | {notes} |",
+            }
         )
 
     # Credly badges with no tracker issue still appear (earned SoT)
@@ -254,12 +271,18 @@ def main() -> None:
         issued = parse_date(b.get("issued_at_date")) or "N/A"
         credly_url = f"https://www.credly.com/badges/{bid}"
         rows.append(
-            f"| {name} | {issuer} | Active | {issued} | N/A | [Credly]({credly_url}) |"
+            {
+                "issued": issued,
+                "line": f"| {name} | {issuer} | Active | {issued} | N/A | [Credly]({credly_url}) |",
+            }
         )
 
+    rows.sort(key=lambda r: issued_sort_key(r["issued"]), reverse=True)
+    lines = [r["line"] for r in rows]
+
     table_rows = (
-        "\n".join(rows)
-        if rows
+        "\n".join(lines)
+        if lines
         else "| No earned Credly certifications found | - | - | - | - | - |"
     )
 
@@ -277,7 +300,7 @@ def main() -> None:
         content,
     )
     Path("README.md").write_text(content, encoding="utf-8")
-    print(f"README updated with {len(rows)} Certification Details rows.")
+    print(f"README updated with {len(lines)} Certification Details rows.")
 
 
 if __name__ == "__main__":
