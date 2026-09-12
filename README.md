@@ -40,10 +40,10 @@ Actively maintaining foundational infrastructure skills while advancing in cyber
 
 | Certification | Issuer | Status | Issued | Expiration | Notes |
 |---------------|--------|--------|--------|------------|-------|
+| [ISC² Certified in Cybersecurity](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/10) | ISC2 | Active | 2026-05 | N/A | [Credly](https://www.credly.com/badges/951f01b4-0128-41a4-bea3-eaf3d0254d63) • [Issue #10](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/10) |
 | [CompTIA Server+ SK0-004](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/7) | CompTIA | Active | 2017-11-18 | N/A | [Credly](https://www.credly.com/badges/1fc6fa72-65b5-4d96-bf02-88a27b0e71e2) • [Issue #7](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/7) |
 | [CompTIA Network+](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/8) | CompTIA | Expired | 2017-06-03 | 2023-06-03 | [Credly](https://www.credly.com/badges/7bfcc047-aef1-474e-9350-0c3f470f6aec) • [Issue #8](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/8) |
 | [CompTIA A+](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/9) | CompTIA | Expired | 2014-05-14 | 2023-06-03 | [Credly](https://www.credly.com/badges/5bdf806a-4ea6-47e7-8b40-66f946c67727) • [Issue #9](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/9) |
-| [ISC² Certified in Cybersecurity](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/10) | ISC2 | Active | 2026-05 | N/A | [Credly](https://www.credly.com/badges/951f01b4-0128-41a4-bea3-eaf3d0254d63) • [Issue #10](https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/10) |
 
 ### Ongoing Journey
 Researching and tracking next certifications (e.g., Security+ as immediate next step → CySA+ → advanced paths like CISSP or specialized domains).  
