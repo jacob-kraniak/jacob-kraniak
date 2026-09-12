@@ -1,11 +1,26 @@
 #!/usr/bin/env python3
-"""Rebuild Certification Details from tracker issues enriched with Credly data."""
+"""Rebuild Certification Details from tracker issues; Credly fills gaps only."""
 from __future__ import annotations
 
 import json
 import re
-import sys
+from datetime import date
 from pathlib import Path
+
+MONTHS = {
+    "january": 1,
+    "february": 2,
+    "march": 3,
+    "april": 4,
+    "may": 5,
+    "june": 6,
+    "july": 7,
+    "august": 8,
+    "september": 9,
+    "october": 10,
+    "november": 11,
+    "december": 12,
+}
 
 
 def norm(s: str) -> str:
@@ -21,14 +36,70 @@ def score_match(issue_title: str, badge_name: str) -> int:
     ti, tb = tokens(issue_title), tokens(badge_name)
     if not ti or not tb:
         return 0
-    overlap = ti & tb
-    # Require meaningful overlap (e.g. network, server, cybersecurity/cc, a+)
-    if not overlap:
-        return 0
-    return len(overlap)
+    return len(ti & tb)
 
 
-def issuer_from_badge(badge: dict) -> str:
+def parse_date(raw: str | None) -> str | None:
+    """Return YYYY-MM-DD, YYYY-MM, or cleaned original — never invent."""
+    if not raw:
+        return None
+    s = raw.strip().strip("*").strip()
+    if not s or s.lower() in {"tbd", "n/a", "na", "none", "-"}:
+        return None
+    if re.fullmatch(r"\d{4}-\d{2}-\d{2}", s):
+        return s
+    if re.fullmatch(r"\d{4}-\d{2}", s):
+        return s
+    m = re.fullmatch(
+        r"(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{1,2}),\s*(\d{4})",
+        s,
+        re.I,
+    )
+    if m:
+        return f"{int(m.group(3)):04d}-{MONTHS[m.group(1).lower()]:02d}-{int(m.group(2)):02d}"
+    m = re.fullmatch(
+        r"(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})",
+        s,
+        re.I,
+    )
+    if m:
+        return f"{int(m.group(2)):04d}-{MONTHS[m.group(1).lower()]:02d}"
+    # Keep recognizable year-only rather than inventing month/day
+    if re.fullmatch(r"\d{4}", s):
+        return s
+    return s
+
+
+def field(body: str, *names: str) -> str | None:
+    for name in names:
+        m = re.search(
+            rf"\*\*{re.escape(name)}\*\*\s*:\s*(.+?)(?:\n|$)",
+            body,
+            re.I,
+        )
+        if m:
+            val = m.group(1).strip()
+            if val and not val.lower().startswith("(replace"):
+                return val
+        m = re.search(rf"^{re.escape(name)}\s*:\s*(.+?)\s*$", body, re.I | re.M)
+        if m:
+            val = m.group(1).strip()
+            if val and not val.lower().startswith("(replace"):
+                return val
+    return None
+
+
+def credly_id_from_body(body: str) -> str | None:
+    m = re.search(r"\*\*Credly Badge ID\*\*\s*:\s*([a-f0-9-]{36})", body, re.I)
+    if m:
+        return m.group(1).lower()
+    m = re.search(r"credly\.com/badges/([a-f0-9-]{36})", body, re.I)
+    if m:
+        return m.group(1).lower()
+    return None
+
+
+def issuer_from_badge(badge: dict) -> str | None:
     template = badge.get("badge_template") or {}
     issuer = template.get("issuer") or {}
     entities = issuer.get("entities") or []
@@ -36,77 +107,142 @@ def issuer_from_badge(badge: dict) -> str:
         name = ((entities[0] or {}).get("entity") or {}).get("name")
         if name:
             return name
-    return "Unknown"
+    return None
+
+
+def issuer_from_labels(labels: list[str]) -> str | None:
+    for lab in labels or []:
+        m = re.match(r"vendor:(.+)$", lab, re.I)
+        if m:
+            v = m.group(1).strip()
+            if v.upper() == "ISC2":
+                return "ISC2"
+            return v
+    return None
+
+
+def is_cert_issue(issue: dict) -> bool:
+    body = issue.get("body") or ""
+    title = issue.get("title") or ""
+    labels = issue.get("labels") or []
+    if credly_id_from_body(body) or field(body, "Date Certified", "Earned Date"):
+        return True
+    if any(re.match(r"vendor:", l, re.I) for l in labels):
+        return True
+    if re.search(r"\b(CompTIA|ISC.?2|CISSP|Security\+|CySA|CCNA|OSCP)\b", title, re.I):
+        return True
+    return False
+
+
+def status_for(title: str, expiration: str | None) -> str:
+    if re.search(r"\(Expired\)", title, re.I) or re.search(r"\bExpired\b", title, re.I):
+        return "Expired"
+    if expiration and re.fullmatch(r"\d{4}-\d{2}-\d{2}", expiration):
+        try:
+            if date.fromisoformat(expiration) < date.today():
+                return "Expired"
+        except ValueError:
+            pass
+    return "Active"
+
+
+def match_badge(issue: dict, badges: list[dict], used: set[str]) -> dict | None:
+    body = issue.get("body") or ""
+    title = issue.get("title") or ""
+    by_id = {b.get("id"): b for b in badges if b.get("id")}
+    cid = credly_id_from_body(body)
+    if cid and cid in by_id and cid not in used:
+        return by_id[cid]
+
+    best, best_score = None, 0
+    for b in badges:
+        bid = b.get("id")
+        if not bid or bid in used:
+            continue
+        name = (b.get("badge_template") or {}).get("name") or ""
+        sc = score_match(title, name)
+        if sc > best_score:
+            best, best_score = b, sc
+    if not best or best_score < 1:
+        return None
+    bname = (best.get("badge_template") or {}).get("name") or ""
+    bname_toks = tokens(bname)
+    strong = tokens(title) & {"server", "network", "cybersecurity", "cc"}
+    a_plus = bool(re.search(r"\ba\+", title.lower()) and re.search(r"\ba\+", bname.lower()))
+    if best_score >= 2 or (strong & bname_toks) or a_plus:
+        return best
+    return None
 
 
 def main() -> None:
-    # Optional: rows passed as argv for backward compat — prefer files
     badges_path = Path("badges.json")
     issues_path = Path("tracker_issues.json")
 
-    badges = []
+    badges: list[dict] = []
     if badges_path.exists():
         raw = json.loads(badges_path.read_text(encoding="utf-8"))
-        badges = [b for b in (raw.get("data") or []) if b.get("state") == "accepted" and b.get("badge_template")]
+        badges = [
+            b
+            for b in (raw.get("data") or [])
+            if b.get("state") == "accepted" and b.get("badge_template")
+        ]
 
-    issues = []
+    issues: list[dict] = []
     if issues_path.exists():
         issues = json.loads(issues_path.read_text(encoding="utf-8"))
 
-    # Map badge id -> badge
-    by_id = {b.get("id"): b for b in badges if b.get("id")}
+    cert_issues = [i for i in issues if is_cert_issue(i)]
+    # Prefer issues that link Credly / have earned dates; keep stable order by issue number
+    cert_issues.sort(key=lambda i: i.get("number") or 0)
 
     rows: list[str] = []
     used_badge_ids: set[str] = set()
 
-    # Prefer issues that already reference a Credly badge id, then fuzzy title match
-    for issue in sorted(issues, key=lambda i: i.get("updated_at") or "", reverse=True):
-        body = issue.get("body") or ""
-        title = issue.get("title") or ""
+    for issue in cert_issues:
         number = issue.get("number")
-        m = re.search(r"\*\*Credly Badge ID\*\*:\s*([a-f0-9-]{36})", body, re.I)
-        badge = by_id.get(m.group(1)) if m else None
+        title = issue.get("title") or ""
+        body = issue.get("body") or ""
+        labels = issue.get("labels") or []
 
-        if not badge:
-            # fuzzy match against remaining badges
-            best, best_score = None, 0
-            for b in badges:
-                bid = b.get("id")
-                if bid in used_badge_ids:
-                    continue
-                name = (b.get("badge_template") or {}).get("name") or ""
-                sc = score_match(title, name)
-                if sc > best_score:
-                    best, best_score = b, sc
-            # Need at least 2 overlapping tokens OR one strong token like server+/network+/cybersecurity
-            if best and best_score >= 1:
-                bname = (best.get("badge_template") or {}).get("name") or ""
-                bname_toks = tokens(bname)
-                strong = tokens(title) & {"server", "network", "cybersecurity", "cc"}
-                a_plus = bool(re.search(r"\ba\+", title.lower()) and re.search(r"\ba\+", bname.lower()))
-                if best_score >= 2 or (strong & bname_toks) or a_plus:
-                    badge = best
+        badge = match_badge(issue, badges, used_badge_ids)
 
-        if not badge:
+        # Issue-first fields
+        issuer = field(body, "Issuing Body", "Issuer") or issuer_from_labels(labels)
+        issued = parse_date(field(body, "Date Certified", "Earned Date"))
+        expiration = parse_date(field(body, "Expiration"))
+
+        # Credly fills gaps only
+        if badge:
+            bid = badge.get("id")
+            if bid:
+                used_badge_ids.add(bid)
+            if not issuer:
+                issuer = issuer_from_badge(badge)
+            if not issued:
+                issued = parse_date(badge.get("issued_at_date"))
+
+        # Skip pure backlog issues with no earned signal and no Credly match
+        if not badge and not issued and not field(body, "Date Certified", "Earned Date"):
             continue
 
-        bid = badge.get("id")
-        if bid in used_badge_ids:
-            continue
-        used_badge_ids.add(bid)
+        issuer = issuer or "Unknown"
+        issued = issued or "N/A"
+        expiration = expiration or "N/A"
+        status = status_for(title, expiration if expiration != "N/A" else None)
 
-        template = badge.get("badge_template") or {}
-        issuer = issuer_from_badge(badge)
-        issued = badge.get("issued_at_date") or "N/A"
-        # Prefer issue title (human) when present
-        name = re.sub(r"\s*\(.*?\)\s*$", "", title).strip() or template.get("name") or "Unknown"
+        name = re.sub(r"\s*\(.*?\)\s*$", "", title).strip() or "Unknown"
         url = f"https://github.com/jacob-kraniak/cybersecurity-certification-tracker/issues/{number}"
-        credly_url = f"https://www.credly.com/badges/{bid}"
+        if badge and badge.get("id"):
+            credly_url = f"https://www.credly.com/badges/{badge.get('id')}"
+            notes = f"[Credly]({credly_url}) • [Issue #{number}]({url})"
+        else:
+            notes = f"[Issue #{number}]({url})"
+
         rows.append(
-            f"| [{name}]({url}) | {issuer} | Active | {issued} | N/A | [Credly]({credly_url}) • [Issue #{number}]({url}) |"
+            f"| [{name}]({url}) | {issuer} | {status} | {issued} | {expiration} | {notes} |"
         )
 
-    # Any Credly badges not matched to an issue still appear (Credly is SoT for earned)
+    # Credly badges with no tracker issue still appear (earned SoT)
     for b in badges:
         bid = b.get("id")
         if not bid or bid in used_badge_ids:
@@ -114,14 +250,18 @@ def main() -> None:
         used_badge_ids.add(bid)
         template = b.get("badge_template") or {}
         name = template.get("name") or "Unknown"
-        issuer = issuer_from_badge(b)
-        issued = b.get("issued_at_date") or "N/A"
+        issuer = issuer_from_badge(b) or "Unknown"
+        issued = parse_date(b.get("issued_at_date")) or "N/A"
         credly_url = f"https://www.credly.com/badges/{bid}"
         rows.append(
             f"| {name} | {issuer} | Active | {issued} | N/A | [Credly]({credly_url}) |"
         )
 
-    table_rows = "\n".join(rows) if rows else "| No earned Credly certifications found | - | - | - | - | - |"
+    table_rows = (
+        "\n".join(rows)
+        if rows
+        else "| No earned Credly certifications found | - | - | - | - | - |"
+    )
 
     content = Path("README.md").read_text(encoding="utf-8")
     new_table = f"""### Certification Details
